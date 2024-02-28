@@ -1,4 +1,4 @@
-const { insertApplication, findTopApplications } = require("../data/application");
+const { insertApplication, findTopApplications, findTopByInstitutions, findTopByProjects } = require("../data/application");
 
 async function createApplication(institution_id, project_id, volunteer_id) {
     return await insertApplication(institution_id, project_id, volunteer_id);
@@ -10,5 +10,18 @@ async function loadTopApplications() {
     return allInstitutions;
 }
 
+async function loadTopByInstitutions() {
+    const allInstitutions = await findTopByInstitutions();
+    return allInstitutions.map(e => e.institution);
+}
 
-module.exports = { createApplication, loadTopApplications }
+async function loadTopByProjects() {
+    const allProjects = await findTopByProjects();
+    return allProjects.map(e => {
+        e.project[0]["applicants"] = e.count
+        return e.project});
+}
+
+
+
+module.exports = { createApplication, loadTopApplications, loadTopByInstitutions, loadTopByProjects }
