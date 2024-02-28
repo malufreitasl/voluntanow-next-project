@@ -45,7 +45,7 @@ function DropdownMenuIcon() {
   }
 
   return (
-    <div className=" relative z-10">
+    <div className="relative top-0 z-50">
       <button className="settings-btn bg-white" onClick={toggleDropdown}><MenuIcon /></button>
       {showDropdown && (
         <div className="flex flex-col absolute gap-6 items-center right-0 text-white h-48 w-44 mt-2 bg-blue-primary rounded-lg">

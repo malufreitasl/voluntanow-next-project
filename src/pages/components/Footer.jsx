@@ -1,16 +1,14 @@
-const {HomeIcon, NoteIcon, UserIcon } = require("./icons/icons")
+const { HomeIcon, NoteIcon, UserIcon } = require("./icons/icons")
 
 
-function Footer (){
+function Footer() {
     return (
-<div>
-    <div className=" flex px-12 justify-center items-center gap-32 bg-blue-primary h-20 w-full text-white">
-        <HomeIcon/>
-        <NoteIcon/>
-        <UserIcon/>
-    </div>
-</div>
+        <div className="fixed bottom-0 inset-x-0 z-50 flex px-12 justify-center items-center gap-32 bg-blue-primary h-20 w-full text-white">
+            <HomeIcon />
+            <NoteIcon />
+            <UserIcon />
+        </div>
     )
 }
 
-module.exports = {Footer}
+module.exports = { Footer }

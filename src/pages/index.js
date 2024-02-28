@@ -42,7 +42,7 @@ export default function Home() {
   useEffect(() => {
     fetchTopInstitutions();
     fetchTopProjects();
-  });
+  }, []);
 
   return (
     <div className="bg-white-background  h-screen w-screen ">
@@ -82,7 +82,7 @@ export default function Home() {
         <h1 className="text-black text-base font-medium">Ações anunciadas</h1>
         <Link href="/project/main"><h2 className="text-gray-text text-sm">Ver mais</h2></Link>
       </div>
-      <div className="flex flex-col pt-4 gap-2.5 pl-6 pr-6 bg-white-background overflow-y-auto h-screen">
+      <div className="flex flex-col pt-4 gap-2.5 pl-6 pr-6 100-vh bg-white-background overflow-y-auto h-screen">
         {topProjects.map((projeto, index) =>
           <motion.div
             initial={{
