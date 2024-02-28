@@ -50,7 +50,7 @@ export default function Home() {
       </div>
       <div className="flex gap-24 pt-6 pl-6 items-center">
         <h1 className="text-black text-base font-medium">Organizações em destaque</h1>
-        <Link href="/institution"><h2 className="text-gray-text text-sm">Ver mais</h2></Link>
+        <Link href="/institution/main"><h2 className="text-gray-text text-sm">Ver mais</h2></Link>
       </div>
       <div className="flex pt-6 pl-6 gap-6 overflow-x-auto whitespace-nowrap">
         {topInstitutions.map((e, index) =>
@@ -79,7 +79,7 @@ export default function Home() {
       </div>
       <div className="flex gap-36 pt-6  pl-6 items-center">
         <h1 className="text-black text-base font-medium">Ações anunciadas</h1>
-        <Link href="/project"><h2 className="text-gray-text text-sm">Ver mais</h2></Link>
+        <Link href="/project/main"><h2 className="text-gray-text text-sm">Ver mais</h2></Link>
       </div>
       <div className="flex flex-col pt-4 gap-2.5 pl-6 pr-6 bg-white-background overflow-y-auto h-screen">
         {topProjects.map((projeto, index) =>
