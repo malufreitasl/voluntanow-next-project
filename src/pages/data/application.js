@@ -56,9 +56,10 @@ async function findTopApplications() {
         },
         {
           $sort:
-            {
-              count: -1,
-            },
+          {
+            count: -1,
+            project: -1
+          },
         },
         {
           $limit:
@@ -129,6 +130,7 @@ async function findTopByProjects() {
           $sort:
             {
               count: -1,
+              project: -1
             },
         },
         {
