@@ -1,4 +1,4 @@
-const { findAllInstitutions } = require("../data/institution");
+const { findAllInstitutions, findTopInstititutions } = require("../data/institution");
 
 async function loadInstitutions() {
     const allInstitutions = await findAllInstitutions();
@@ -6,4 +6,10 @@ async function loadInstitutions() {
     return allInstitutions;
 }
 
-module.exports = { loadInstitutions };
+async function loadTopInstititutions() {
+    const allInstitutions = await findTopInstititutions();
+    console.log(allInstitutions);
+    return allInstitutions;
+}
+
+module.exports = { loadInstitutions, loadTopInstititutions };
