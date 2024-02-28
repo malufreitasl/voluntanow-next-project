@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb')
 
-const DEFAULT_DB_NAME = "signupform"
+const DEFAULT_DB_NAME = "voluntanow-project"
 const URL = process.env.MONGO_URL ?? "mongodb+srv://malufreitasl:voluntanow123@cluster0.i6jlxu4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 const PORT = process.env.PORT || 3000
 
