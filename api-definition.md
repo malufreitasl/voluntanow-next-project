@@ -1,30 +1,3 @@
-# Institution
-## GET /api/institution
-        request:
-            body: { }
-        response (200 ok): 
-            body: 
-            {
-                "institutions": [
-                    {
-                        "name": "Instituicao 1"
-                    },
-                    {
-                        "name": "Instituicao 2"
-                    }
-                ]
-            }
-
-## GET /api/institution/highlights
-        body: empty
-        response (200 ok): {
-            "institutions": [
-                {
-                    "name"
-                }
-            ]
-        }
-
 # Application
 ## POST /api/application
         request:
@@ -54,6 +27,70 @@
                     }
                 ]
             }
+
+## GET api/application/hightlights
+        request:
+            body: { }
+        response (200 ok): 
+            body: 
+            {
+                "_id": "",
+                "count": 0,
+                "project": [
+                    {
+                        "_id": "",
+                        "institution_id": "",
+                        "name": "",
+                        "description": "",
+                        "hour": "",
+                        "date": "",
+                        "min_duration": 0,
+                        "address": "",
+                        "rating": 0
+                    }
+		        ],
+                ,
+                "institution": [
+                    {
+                        "_id": "",
+                        "username": "",
+                        "password": "",
+                        "name": "Acolhimento a Idosos Porto",
+                        "description": "",
+                        "website_link": "",
+                        "email": "",
+                        "phone": ",
+                        "local": ""
+                    }
+                ]
+            }
+
+# Institution
+## GET /api/institution
+        request:
+            body: { }
+        response (200 ok): 
+            body: 
+            {
+                "institutions": [
+                    {
+                        "name": "Instituicao 1"
+                    },
+                    {
+                        "name": "Instituicao 2"
+                    }
+                ]
+            }
+
+## GET /api/institution/highlights
+        body: empty
+        response (200 ok): {
+            "institutions": [
+                {
+                    "name"
+                }
+            ]
+        }
 
 # Project
 ## GET /api/project
