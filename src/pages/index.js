@@ -1,6 +1,8 @@
 import { Inter } from "next/font/google";
 import { NavBar } from "./components/NavBar";
 import { motion } from "framer-motion"
+import { Footer } from "./components/Footer";
+import Link from 'next/link';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -72,7 +74,7 @@ export default function Home() {
         <h2 className="text-gray-text text-sm">Ver mais</h2>
       </div>
       <div className="flex pt-6 pl-6 gap-6 overflow-x-auto whitespace-nowrap">
-        {arrayExemploInstituicoes.map((e, index) =>
+        {arrayExemploInstituicoes.map((elemento, index) =>
           <motion.div
             key={index}
 
@@ -89,9 +91,9 @@ export default function Home() {
             }}
           >
             <div className=" flex flex-col bg-blue-primary  w-56 h-64 rounded-lg p-4 pl-5 gap-5">
-              <div className="text-white-background text-2xl whitespace-normal">{e.NomeInstituicao}</div>
-              <div className="bg-gray-text w-14 text-white rounded-lg text-center text-xs">{e.Local}</div>
-              <div className="text-white text-base whitespace-normal">{e.DescricaoInstituicao}</div>
+              <div className="text-white-background text-2xl whitespace-normal">{elemento.NomeInstituicao}</div>
+              <div className="bg-gray-text w-14 text-white rounded-lg text-center text-xs">{elemento.Local}</div>
+              <div className="text-white text-base whitespace-normal">{elemento.DescricaoInstituicao}</div>
             </div>
           </motion.div>
         )}
@@ -129,6 +131,9 @@ export default function Home() {
             </div>
           </motion.div>
         )}
+      </div>
+      <div>
+        <Footer/>
       </div>
     </div >
   );
