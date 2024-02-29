@@ -1,11 +1,11 @@
-import { Inter } from "next/font/google";
+import { Raleway } from "next/font/google";
 import { NavBar } from "./components/NavBar";
 import { motion } from "framer-motion"
 import { Footer } from "./components/Footer";
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
+const raleway = Raleway({ subsets: ["latin"] });
 
 
 export default function Home() {
@@ -45,7 +45,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-white-background  h-screen w-screen ">
+    <div className={`bg-white-background h-screen w-screen ${raleway.className}`}>
       <div>
         <NavBar />
       </div>
