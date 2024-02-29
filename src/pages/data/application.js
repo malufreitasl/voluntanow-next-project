@@ -71,7 +71,8 @@ async function findTopApplications() {
 
 async function findTopByInstitutions() {
     const collection = await getMongoCollection(collectionName);
-    const distictProjects = await collection.aggregate( [
+    const distictProjects = await collection.aggregate(
+     [
         {
           $lookup: {
               from: "institution",
@@ -188,4 +189,69 @@ async function findTopByProjects() {
     return distictProjects.toArray();
 }
 
-module.exports = { findAllApplications, findTopApplications, findTopByInstitutions, insertApplication, findTopByProjects };
+async function findAllInstitutionsInfo() {
+    const collection = await getMongoCollection(collectionName);
+    const allInstitutionsInfo = await collection.aggregate([
+        {
+          "$lookup": {
+            "from": "project",
+            "localField": "project_id",
+            "foreignField": "_id",
+            "as": "projects"
+          }
+        },
+        {
+          "$lookup": {
+            "from": "institution",
+            "localField": "institution_id",
+            "foreignField": "_id",
+            "as": "institution_info"
+          }
+        },
+        {
+          "$unwind": "$projects"
+        },
+        {
+          "$group": {
+            "_id": {
+              "institution_id": "$institution_id",
+              "project_id": "$projects._id"
+            },
+            "institution": { "$first": { "$arrayElemAt": ["$institution_info", 0] } },
+            "project": { "$first": "$projects" },
+            "count": { "$sum": 1 }
+          }
+        },
+        {
+          "$group": {
+            "_id": "$_id.institution_id",
+            "institution": { "$first": "$institution" },
+            "projects": {
+              "$push": {
+                "_id": "$project._id",
+                "name": "$project.name",
+                "description": "$project.description",
+                "hour": "$project.hour",
+                "date": "$project.date",
+                "min_duration": "$project.min_duration",
+                "address": "$project.address",
+                "rating": "$project.rating",
+                "applicants": "$count"
+              }
+            },
+            "total_applicants": { "$sum": "$count" }
+          }
+        },
+        {
+          "$project": {
+            "_id": 0,
+            "institution": 1,
+            "projects": 1,
+            "total_applicants": 1
+          }
+        }
+      ]);
+      return allInstitutionsInfo.toArray();
+}
+
+module.exports = { findAllApplications, findTopApplications, findTopByInstitutions, insertApplication, findTopByProjects, findAllInstitutionsInfo };
