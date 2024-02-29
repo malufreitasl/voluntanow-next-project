@@ -97,7 +97,7 @@ async function findTopByInstitutions() {
           },
         },
         {
-          $limit: 10,
+          $limit: 5,
         },
       ])
     return distictProjects.toArray();
@@ -143,7 +143,7 @@ async function findTopByProjects() {
               },
             },
             {
-              $limit: 10,
+              $limit: 5,
             },
             {
               $project: {
