@@ -70,7 +70,7 @@ export default function Home() {
               delay: index * 0.15
             }}
           >
-            <div className=" flex flex-col bg-blue-primary  w-56 h-64 rounded-lg p-4 pl-5 gap-5">
+            <div className=" flex flex-col bg-blue-primary  w-56 h-64 rounded-xl p-4 pl-5 gap-5">
               <div className="text-white-background  text-2xl whitespace-normal">{elemento.name}</div>
               <div className="bg-gray-text text-white rounded-lg text-center text-xs">{elemento.local}</div>
               <div className="text-white text-base whitespace-normal">{elemento.description}</div>
@@ -102,7 +102,7 @@ export default function Home() {
             key={index}
           ><div>
               <div className="text-blue-primary text-base font-medium">{projeto.name}</div>
-              <div className="text-orange-primary text-sm">{projeto.institution_id}</div>
+              <div className="text-orange-primary text-sm">{projeto.institution_name}</div>
               <div className="flex gap-2.5">
                 <div className="text-gray-text text-sm">{projeto.date}</div>
                 <div className="text-gray-text text-sm">{projeto.applicants} inscritos</div>

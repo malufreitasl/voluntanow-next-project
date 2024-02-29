@@ -17,9 +17,7 @@ async function loadTopByInstitutions() {
 
 async function loadTopByProjects() {
     const allProjects = await findTopByProjects();
-    return allProjects.map(e => {
-        e.project[0]["applicants"] = e.count
-        return e.project});
+    return allProjects;
 }
 
 

@@ -106,37 +106,84 @@ async function findTopByInstitutions() {
 async function findTopByProjects() {
     const collection = await getMongoCollection(collectionName);
     const distictProjects = await collection.aggregate( [
-        {
-          $lookup: {
-              from: "project",
-              localField: "project_id",
-              foreignField: "_id",
-              as: "project_info",
-            },
-        },
-        {
-          $group:
             {
-              _id: "$project_id",
-              count: {
-                $sum: 1,
-              },
-              project: {
-                $first: "$project_info",
+              $lookup: {
+                from: "project",
+                localField: "project_id",
+                foreignField: "_id",
+                as: "project_info",
               },
             },
-        },
-        {
-          $sort:
             {
-              count: -1,
-              project: -1
+              $lookup: {
+                from: "institution",
+                localField: "institution_id",
+                foreignField: "_id",
+                as: "institution_info",
+              },
             },
-        },
-        {
-          $limit:
-            10,
-        },
+            {
+              $group: {
+                _id: "$project_id",
+                count: {
+                  $sum: 1,
+                },
+                project: {
+                  $first: "$project_info",
+                },
+                institution: {
+                  $first: "$institution_info",
+                },
+              },
+            },
+            {
+              $sort: {
+                count: -1,
+                project: -1,
+              },
+            },
+            {
+              $limit: 10,
+            },
+            {
+              $project: {
+                _id: {
+                  $arrayElemAt: ["$project._id", 0],
+                },
+                institution_id: {
+                  $arrayElemAt: [
+                    "$project.institution_id",
+                    0,
+                  ],
+                },
+                name: {
+                  $arrayElemAt: ["$project.name", 0],
+                },
+                description: {
+                  $arrayElemAt: ["$project.description", 0],
+                },
+                hour: {
+                  $arrayElemAt: ["$project.hour", 0],
+                },
+                date: {
+                  $arrayElemAt: ["$project.date", 0],
+                },
+                min_duration: {
+                  $arrayElemAt: [
+                    "$project.min_duration",
+                    0,
+                  ],
+                },
+                address: {
+                  $arrayElemAt: ["$project.address", 0],
+                },
+                rating: "$rating",
+                institution_name: {
+                  $arrayElemAt: ["$institution.name", 0],
+                },
+                applicants: "$count"
+              },
+            },
       ])
     return distictProjects.toArray();
 }
