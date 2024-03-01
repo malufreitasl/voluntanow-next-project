@@ -2,30 +2,31 @@ import { useState, useEffect } from "react";
 import { Footer } from "../components/Footer";
 import { NavBar } from "../components/NavBar";
 import { useRouter } from "next/router";
+import { ProjectsList } from "../components/ProjectsList";
 
 export default function InfoInstitution() {
     const [institutionData, setInstitutionData] = useState({});
     const router = useRouter();
-    const { details } = router.query;
+    const { i } = router.query;
 
     useEffect(() => {
         const fetchInstitutionInfo = async () => {
             try {
-                const response = await fetch(`/api/institution/info?details=${details}`);
+                const response = await fetch(`/api/institution/info?i=${i}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch institutions data');
                 }
                 const data = await response.json();
-                setInstitutionData(data);
+                setInstitutionData(data[0]);
             } catch (error) {
                 console.error('Failed to fetch institutions data:', error);
             }
         };
         
-        if (details) {
+        if (i) {
             fetchInstitutionInfo();
         }
-    }, [details]);
+    }, [i]);
 
     return (
         <>
@@ -44,20 +45,8 @@ export default function InfoInstitution() {
                         <h2 className="text-xl font-medium text-black">Descrição da Organização</h2>
                         <p className="text-justify text-base text-black">{institutionData?.institution?.description}</p>
                     </div>
-                    <div className="flex flex-col gap-3">
-                        <h2 className="font-medium text-xl text-black ">Ações anunciadas</h2>
-                        {institutionData?.projects?.map((project, index) => (
-                            <div key={index}>
-                                <div className="border-b border-gray-text pb-2">
-                                    <div className="text-blue-primary text-base font-medium">{project?.name}</div>
-                                    <div className="text-orange-primary text-sm">{project?.address}</div>
-                                    <div className="flex gap-2.5">
-                                        <div className="text-gray-text text-sm">{project?.date}</div>
-                                        <div className="text-gray-text text-sm">{`${project?.applicants} ${project?.applicants === 1 ? "pessoa já inscrita" : "pessoas já inscritas"}`}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+                    <div>
+                        <ProjectsList projects={institutionData.projects}/>
                     </div>
                     <div className="flex flex-col gap-3">
                         <h2 className="text-xl">Contactos</h2>

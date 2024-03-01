@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 export default function InstitutionsPage() {
     const [allInstitutions, setAllInstitutions] = useState([]);
-    const [selectedInstitution, setSelectedInstitution] = useState(null);
 
     useEffect(() => {
         const fetchAllInstitutions = async () => {
@@ -23,10 +22,6 @@ export default function InstitutionsPage() {
         };
         fetchAllInstitutions();
     }, []);
-
-    const handleOnClick = (index) => {
-        setSelectedInstitution(allInstitutions[index]);
-    };
 
     return (
         <div className="bg-white-background h-screen w-screen">
@@ -53,9 +48,8 @@ export default function InstitutionsPage() {
                             delay: index * 0.15
                         }}
                         key={index}
-                        onClick={() => handleOnClick(index)}
                     >
-                        <Link href={`/institution/info?details=${encodeURIComponent(JSON.stringify(allInstitutions[index]))}`}>
+                        <Link href={`/institution/info?i=${institutionData._id}`}>
                             <div className="border-b border-gray-text pb-2">
                                     <div className="text-blue-primary text-base font-medium">{institutionData.institution.name}</div>
                                     <div className="text-orange-primary text-sm">{institutionData.institution.local}</div>
