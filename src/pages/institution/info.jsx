@@ -35,7 +35,7 @@ export default function InfoInstitution() {
                 <NavBar />
                 <div className="flex flex-col gap-6 px-6 pt-6 pb-32">
                     <div className="flex flex-col gap-2">
-                        <h1 className="text-2xl font-medium">{institutionInfo.name}</h1>
+                        <h1 className="text-2xl font-semibold text-black">{institutionInfo.name}</h1>
                         <p className="text-orange-primary text-lg">{institutionInfo.local}</p>
                         <div className="flex gap-4 pt-1">
                             <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{`${institutionInfo.application} ${institutionInfo.application === 1? "inscrição em projetos": "inscrições em projetos"}`}</p>
@@ -43,11 +43,11 @@ export default function InfoInstitution() {
                         </div>
                     </div>
                     <div className="flex flex-col gap-3">
-                        <h2 className="text-xl">Descrição da Organização</h2>
-                        <p className="text-justify">{institutionInfo.description}</p>
+                        <h2 className="text-xl font-medium text-black">Descrição da Organização</h2>
+                        <p className="text-justify text-base text-black">{institutionInfo.description}</p>
                     </div>
                     <div className="flex flex-col gap-3">
-                        <h2 className="text-xl">Ações anunciadas</h2>
+                        <h2 className="font-medium text-xl text-black ">Ações anunciadas</h2>
                         {projects.map((project, index) =>
                             <motion.div
                             initial={{

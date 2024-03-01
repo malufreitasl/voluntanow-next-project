@@ -13,7 +13,8 @@ module.exports = {
       "gray-text": "#858585",
       "white-background": "#FAFAFA",
       "black": "#000000",
-      "white": "#FFFFFF"
+      "white": "#FFFFFF",
+      "cartsFilter": "#EDE9E9"
     },
     extend: {
       backgroundImage: {
