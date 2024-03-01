@@ -39,6 +39,15 @@ export default function Home() {
     }
   };
 
+  const TruncatedText = ({text, maxLength}) => {
+    if (text.length <= maxLength) {
+      return <div>{elemento.description}</div>
+    }
+    const truncatedText = text.substring(0, maxLength) + '...'
+
+    return <div className="text-white text-base truncate overflow-hidden whitespace-normal"> {truncatedText} </div>
+  }
+
   useEffect(() => {
     fetchTopInstitutions();
     fetchTopProjects();
@@ -75,7 +84,7 @@ export default function Home() {
                 <div className="text-white-background  text-2xl whitespace-normal">{elemento.name}</div>
                 <div className="bg-gray-text text-white rounded-lg text-center text-xs">{elemento.local}</div>
                
-                <div className=" text-white  h-48 text-base whitespace-normal overflow-hidden ">{elemento.description}</div>
+                <TruncatedText text={elemento.description} maxLength={80}/>
               
               </div>
             </motion.div>
