@@ -7,10 +7,10 @@ async function loadProjects() {
     return allProjects
 }
 
-async function loadAlProjectDataById(projectID) {
+async function loadAllProjectDataById(projectID) {
     const allInstitutionInfo = await findProjectById(projectID);
     return allInstitutionInfo;
 }
 
 
-module.exports = { loadProjects, loadRecentProjects, loadFinishedProjects, loadAlProjectDataById };
+module.exports = { loadProjects, loadAllProjectDataById };
