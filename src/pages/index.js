@@ -80,13 +80,15 @@ export default function Home() {
                 delay: index * 0.15
               }}
             >
-              <div className="flex flex-col bg-blue-primary  h-full w-60 rounded-xl p-4 pl-5 gap-5 ">
-                <div className="text-white-background  text-2xl whitespace-normal">{elemento.name}</div>
-                <div className="bg-gray-text text-white rounded-lg text-center text-xs">{elemento.local}</div>
-               
-                <TruncatedText text={elemento.description} maxLength={80}/>
-              
-              </div>
+              <Link href={`/institution/info?i=${elemento._id}`}>
+                <div className="flex flex-col bg-blue-primary  h-full w-60 rounded-xl p-4 pl-5 gap-5 ">
+                  <div className="text-white-background  text-2xl whitespace-normal">{elemento.name}</div>
+                  <div className="bg-gray-text text-white rounded-lg text-center text-xs">{elemento.local}</div>
+                
+                  <TruncatedText text={elemento.description} maxLength={80}/>
+                
+                </div>
+              </Link>
             </motion.div>
           )}
         </div>
