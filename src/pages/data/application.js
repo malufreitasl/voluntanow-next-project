@@ -188,70 +188,80 @@ async function findTopByProjects() {
       ])
     return distictProjects.toArray();
 }
-
 async function findAllInstitutionsInfo() {
-    const collection = await getMongoCollection(collectionName);
-    const allInstitutionsInfo = await collection.aggregate([
-        {
-          "$lookup": {
-            "from": "project",
-            "localField": "project_id",
-            "foreignField": "_id",
-            "as": "projects"
-          }
-        },
-        {
-          "$lookup": {
+  const collection = await getMongoCollection(collectionName);
+  const allInstitutionsInfo = await collection.aggregate(
+    [      
+      {
+      "$lookup": {
+          "from": "project",
+          "localField": "project_id",
+          "foreignField": "_id",
+          "as": "projects"
+      }
+    },
+    {
+        "$lookup": {
             "from": "institution",
             "localField": "institution_id",
             "foreignField": "_id",
             "as": "institution_info"
-          }
-        },
-        {
-          "$unwind": "$projects"
-        },
-        {
-          "$group": {
+        }
+    },
+    {
+        "$unwind": "$projects"
+    },
+    {
+        "$group": {
             "_id": {
-              "institution_id": "$institution_id",
-              "project_id": "$projects._id"
+                "institution_id": "$institution_id",
+                "project_id": "$projects._id"
             },
-            "institution": { "$first": { "$arrayElemAt": ["$institution_info", 0] } },
+            "institution": { "$first": "$institution_info" }, // Use "$first" for institution_info
             "project": { "$first": "$projects" },
             "count": { "$sum": 1 }
-          }
-        },
-        {
-          "$group": {
+        }
+    },
+    {
+        "$group": {
             "_id": "$_id.institution_id",
-            "institution": { "$first": "$institution" },
+            "institution": {
+                "$first": {
+                    "$arrayElemAt": ["$institution", 0] // Select the first document from institution array
+                }
+            },
             "projects": {
-              "$push": {
-                "_id": "$project._id",
-                "name": "$project.name",
-                "description": "$project.description",
-                "hour": "$project.hour",
-                "date": "$project.date",
-                "min_duration": "$project.min_duration",
-                "address": "$project.address",
-                "rating": "$project.rating",
-                "applicants": "$count"
-              }
+                "$push": {
+                    "_id": "$project._id",
+                    "name": "$project.name",
+                    "description": "$project.description",
+                    "hour": "$project.hour",
+                    "date": "$project.date",
+                    "min_duration": "$project.min_duration",
+                    "address": "$project.address",
+                    "rating": "$project.rating",
+                    "applicants": "$count"
+                }
             },
             "total_applicants": { "$sum": "$count" }
-          }
-        },
-        {
-          "$project": {
+        }
+    },
+    {
+        "$project": {
             "_id": 0,
-            "institution": 1,
+            "institution.username": "$institution.username",
+            "institution.name": "$institution.name",
+            "institution.description": "$institution.description",
+            "institution.website_link": "$institution.website_link",
+            "institution.email": "$institution.email",
+            "institution.phone": "$institution.phone",
+            "institution.local": "$institution.local",
             "projects": 1,
             "total_applicants": 1
-          }
         }
-      ]);
-      return allInstitutionsInfo.toArray();
+    }])
+
+  return allInstitutionsInfo.toArray();
 }
 
 module.exports = { findAllApplications, findTopApplications, findTopByInstitutions, insertApplication, findTopByProjects, findAllInstitutionsInfo };
