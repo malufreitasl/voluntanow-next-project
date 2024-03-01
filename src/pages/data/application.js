@@ -354,5 +354,94 @@ async function findInstitutionById(institution_id) {
   )
   return institution_info.toArray();
 }
+async function findProjectById(projectID) {
+  const collection = await getMongoCollection(collectionName);
+  const institution_info = await collection.aggregate([
+      {
+        "$match": {
+          "project_id": new ObjectId(projectID)
+        }
+      },
+      {
+        "$lookup": {
+          "from": "project",
+          "localField": "project_id",
+          "foreignField": "_id",
+          "as": "projects"
+        }
+      },
+      {
+        "$lookup": {
+          "from": "institution",
+          "localField": "institution_id",
+          "foreignField": "_id",
+          "as": "institution_info"
+        }
+      },
+      {
+        "$unwind": "$projects"
+      },
+      {
+        "$group": {
+          "_id": {
+            "project_id": "$projects._id",
+            "institution_id": "$institution_id"
+          },
+          "project": {
+            "$first": "$projects"
+          },
+          "institution": {
+            "$first": "$institution_info"
+          }, 
+          "count": {
+            "$sum": 1
+          }
+        }
+      },
+      {
+        "$group": {
+          "_id": "$_id.institution_id",
+          "institution": {
+            "$first": {
+              "$arrayElemAt": ["$institution", 0]
+            }
+          },
+          "projects": {
+            "$push": {
+              "_id": "$project._id",
+              "name": "$project.name",
+              "description": "$project.description",
+              "hour": "$project.hour",
+              "date": "$project.date",
+              "min_duration": "$project.min_duration",
+              "address": "$project.address",
+              "rating": "$project.rating",
+              "applicants": "$count"
+            }
+          },
+          "total_applicants": {
+            "$sum": "$count"
+          }
+        }
+      },
+      {
+        "$project": {
+          "_id": 0,
+          "institution.username": "$institution.username",
+          "institution.name": "$institution.name",
+          "institution.description": "$institution.description",
+          "institution.website_link": "$institution.website_link",
+          "institution.email": "$institution.email",
+          "institution.phone": "$institution.phone",
+          "institution.local": "$institution.local",
+          "projects": 1,
+          "total_applicants": 1
+        }
+      }
+    ]
+    
+  )
+  return institution_info.toArray();
+}
 
-module.exports = { findAllApplications, findTopApplications, findTopByInstitutions, insertApplication, findTopByProjects, findAllInstitutionsInfo, findInstitutionById };
+module.exports = { findAllApplications, findTopApplications, findTopByInstitutions, insertApplication, findTopByProjects, findAllInstitutionsInfo, findInstitutionById, findProjectById };
