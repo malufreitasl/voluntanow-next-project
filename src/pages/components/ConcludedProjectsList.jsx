@@ -15,10 +15,12 @@ function ConcludedProjectsList({ finishedProjects }) {
                         throw new Error('Failed to fetch project rating');
                     }
                     const data = await response.json();
-                    ratings[project._id] = data[0].averageRating;
+                    if (data.length > 0) {
+                        ratings[project._id] = data[0].averageRating;
+                    } else {
+                        ratings[project._id] = "Not Found" 
+                    }
                 }
-    
-                console.log(ratings);
                 setStarRatings(ratings);
             } catch (error) {
                 console.error('Failed to fetch project ratings:', error);
@@ -27,6 +29,7 @@ function ConcludedProjectsList({ finishedProjects }) {
     
         fetchStarRatings();
     }, [finishedProjects]);
+    
     
 
     return (
@@ -42,14 +45,17 @@ function ConcludedProjectsList({ finishedProjects }) {
                             <div className="text-gray-text text-sm">{`${project?.applicants} ${project?.applicants === 1 ? "pessoa inscrita" : "pessoas inscritas"}`}</div>
                         </div>
                         <div>
-                            <StarRatings
-                                rating={starRatings[project._id]?? 0}
-                                starRatedColor="#EB4000"
-                                numberOfStars={5}
-                                starDimension="15px"
-                                starSpacing="1px"
-                                name={`rating-${index}`}
-                            />
+                            { starRatings[project._id] !== "Not Found"? (
+                                <StarRatings
+                                    rating={starRatings[project._id]}
+                                    starRatedColor="#EB4000"
+                                    numberOfStars={5}
+                                    starDimension="15px"
+                                    starSpacing="1px"
+                                    name={`rating-${index}`}/>
+                            ) : (
+                                <p className='text-gray-terciary text-xs'>Sem avaliações ainda</p>
+                            )}
                         </div>
                     </div>
                 </div>
