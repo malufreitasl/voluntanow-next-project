@@ -38,7 +38,11 @@ export default function InfoInstitution() {
                         <p className="text-orange-primary text-lg">{institutionData?.institution?.local}</p>
                         <div className="flex gap-4 pt-1">
                             <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{`${institutionData?.total_applicants} ${institutionData?.total_applicants === 1 ? "inscrição em projetos" : "inscrições em projetos"}`}</p>
-                            <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">Classificação: 4,2 / 5</p>
+                            <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">
+                            {institutionData?.institution_avg_rating
+                                ? `Classificação: ${institutionData?.institution_avg_rating}/5`
+                                : "Sem avaliações"}
+                            </p>
                         </div>
                     </div>
                     <div className="flex flex-col gap-3">
@@ -53,6 +57,7 @@ export default function InfoInstitution() {
                         <div className="flex flex-col gap-0.5">
                             <p>{institutionData?.institution?.email}</p>
                             <p>{institutionData?.institution?.phone}</p>
+                            <p>{institutionData?.institution?.website_link}</p>
                         </div>
                     </div>
                 </div>
