@@ -73,14 +73,14 @@ export default function ProjectPage() {
                             key={index}
                         >
                             <Link href={elemento}>
-                            <div className="border-b border-gray-text pb-2">
-                                <div class="text-blue-primary text-base font-medium">{arrayDeAcoes[0].nome}</div>
-                                <div class="text-orange-primary text-sm">{arrayDeAcoes[0].instituição}</div>
-                                <div class="flex gap-2.5">
-                                    <div class="text-gray-text text-sm">{arrayDeAcoes[0].data}</div>
-                                    <div class="text-gray-text text-sm">{arrayDeAcoes[0].inscritos} já inscritas</div>
+                                <div className="border-b border-gray-text pb-2">
+                                    <div class="text-blue-primary text-base font-medium">{arrayDeAcoes[0].nome}</div>
+                                    <div class="text-orange-primary text-sm">{arrayDeAcoes[0].instituição}</div>
+                                    <div class="flex gap-2.5">
+                                        <div class="text-gray-text text-sm">{arrayDeAcoes[0].data}</div>
+                                        <div class="text-gray-text text-sm">{arrayDeAcoes[0].inscritos} já inscritas</div>
+                                    </div>
                                 </div>
-                            </div>
                             </Link>
                         </motion.div>
                     )}
