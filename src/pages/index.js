@@ -104,7 +104,7 @@ export default function Home() {
               }}
               key={index}
             >
-              <div className="border-b">
+              <div className=" border-b border-gray-text pb-2">
                 <div className="text-blue-primary text-base font-medium">{projeto.name}</div>
                 <div className="text-orange-primary text-sm">{projeto.institution_name}</div>
                 <div className="flex gap-2.5">
