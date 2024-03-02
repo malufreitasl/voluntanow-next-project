@@ -1,21 +1,16 @@
 const { findAllProjects } = require("../data/project");
 import moment from 'moment';
+import { findProjectById } from '../data/application';
 
 async function loadProjects() {
     const allProjects = await findAllProjects();
     return allProjects
 }
 
-async function loadRecentProjects() {
-    const allProjects = await findAllProjects();
-    const currentDate = moment();
-    return allProjects.filter(project => moment(project.date, "DD-MM-YYYY").isAfter(currentDate));
+async function loadAllProjectDataById(projectID) {
+    const allInstitutionInfo = await findProjectById(projectID);
+    return allInstitutionInfo;
 }
 
-async function loadFinishedProjects() {
-    const allProjects = await findAllProjects();
-    const currentDate = moment();
-    return allProjects.filter(project => moment(project.date, "DD-MM-YYYY").isBefore(currentDate));
-}
 
-module.exports = { loadProjects, loadRecentProjects, loadFinishedProjects };
+module.exports = { loadProjects, loadAllProjectDataById };
