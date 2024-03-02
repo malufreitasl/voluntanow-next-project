@@ -3,6 +3,11 @@ import { Footer } from "../components/Footer";
 import { NavBar } from "../components/NavBar";
 import { useRouter } from "next/router";
 import { ProjectsList } from "../components/ProjectsList";
+import { Raleway } from "next/font/google";
+
+
+
+const raleway = Raleway({ subsets: ["latin"] });
 
 export default function InfoInstitution() {
     const [institutionData, setInstitutionData] = useState({});
@@ -30,9 +35,9 @@ export default function InfoInstitution() {
 
     return (
         <>
-            <div>
+            <div className={`${raleway.className}`}>
                 <NavBar />
-                <div className="flex flex-col gap-6 px-6 pt-6 pb-32">
+                <div className="flex flex-col gap-6 px-6 pt-64 pb-32">
                     <div className="flex flex-col gap-2">
                         <h1 className="text-2xl font-semibold text-black">{institutionData?.institution?.name}</h1>
                         <p className="text-orange-primary text-lg">{institutionData?.institution?.local}</p>

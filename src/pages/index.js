@@ -58,8 +58,8 @@ export default function Home() {
       <div>
         <NavBar />
       </div>
-      <div className="pt-6 px-6">
-        <div className="flex justify-between text-center">
+      <div className="px-6">
+        <div className=" pt-64 flex justify-between text-center">
           <h1 className="text-black text-base font-medium">Organizações em destaque</h1>
           <Link href="/institution/main"><h2 className="text-gray-text text-sm">Ver mais</h2></Link>
         </div>
@@ -83,7 +83,7 @@ export default function Home() {
               <Link href={`/institution/info?i=${elemento._id}`}>
                 <div className="flex flex-col bg-blue-primary  h-full w-60 rounded-xl p-4 pl-5 gap-5 ">
                   <div className="text-white-background  text-2xl whitespace-normal">{elemento.name}</div>
-                  <div className="bg-gray-text text-white rounded-lg text-center text-xs">{elemento.local}</div>
+                  <div className="bg-gray-text text-white text-xs py-1 px-2.5 rounded-full overflow-hidden max-w-min ">{elemento.local}</div>
                 
                   <TruncatedText text={elemento.description} maxLength={80}/>
                 

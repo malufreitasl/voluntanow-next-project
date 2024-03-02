@@ -3,6 +3,11 @@ import { motion } from "framer-motion";
 import { Footer } from "../components/Footer";
 import Link from 'next/link';
 import { useEffect, useState } from "react";
+import { Raleway } from "next/font/google";
+
+
+
+const raleway = Raleway({ subsets: ["latin"] });
 
 export default function InstitutionsPage() {
     const [allInstitutions, setAllInstitutions] = useState([]);
@@ -24,14 +29,14 @@ export default function InstitutionsPage() {
     }, []);
 
     return (
-        <div className="bg-white-background h-screen w-screen">
-            <div>
+        <div className={`${raleway.className}`}>
+            <div >
                 <NavBar />
             </div>
-            <div className="flex gap-36 pt-6 pl-6 items-center">
+            <div className="flex gap-36 pt-64 pl-6 items-center">
             <h1 className="text-2xl font-semibold text-black">Organizações</h1>
             </div>
-            <div className="flex flex-col pt-4 gap-2.5 pl-6 pr-6 pb-32 100-vh bg-white-background">
+            <div className="flex flex-col pt-4 gap-2.5 pl-6 pr-6 pb-32 100-vh ">
                 {allInstitutions.map((institutionData, index) => (
                     <motion.div
                         initial={{
