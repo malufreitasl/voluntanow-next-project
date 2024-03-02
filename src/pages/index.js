@@ -10,8 +10,8 @@ export default function Home() {
   const [topInstitutions, setTopInstitutions] = useState([]);
   const [topProjects, setTopProjects] = useState([]);
 
-   // Fetch para obter dados das instituições em destaque
-   const fetchTopInstitutions = async () => {
+  // Fetch para obter dados das instituições em destaque
+  const fetchTopInstitutions = async () => {
     try {
       const response = await fetch('./api/application/top-institutions');
       if (!response.ok) {
@@ -24,7 +24,7 @@ export default function Home() {
     }
   };
 
-   const fetchTopProjects = async () => {
+  const fetchTopProjects = async () => {
     try {
       const response = await fetch('./api/application/top-projects');
       if (!response.ok) {
@@ -37,6 +37,15 @@ export default function Home() {
     }
   };
 
+  const TruncatedText = ({text, maxLength}) => {
+    if (text.length <= maxLength) {
+      return <div>{elemento.description}</div>
+    }
+    const truncatedText = text.substring(0, maxLength) + '...'
+
+    return <div className="text-white text-base truncate overflow-hidden whitespace-normal"> {truncatedText} </div>
+  }
+
   useEffect(() => {
     fetchTopInstitutions();
     fetchTopProjects();
@@ -47,71 +56,78 @@ export default function Home() {
       <div>
         <NavBar />
       </div>
-      <div className="flex gap-24 pt-6 pl-6 items-center">
-        <h1 className="text-black text-base font-medium">Organizações em destaque</h1>
-        <Link href="/institution/main"><h2 className="text-gray-text text-sm">Ver mais</h2></Link>
-      </div>
-      <div className="flex pt-6 pl-6 gap-6 overflow-x-auto whitespace-nowrap">
-        {topInstitutions.map((elemento, index) =>
-          <motion.div
-            key={index}
+      <div className="pt-6 px-6">
+        <div className="flex justify-between text-center">
+          <h1 className="text-black text-base font-medium">Organizações em destaque</h1>
+          <Link href="/institution/main"><h2 className="text-gray-text text-sm">Ver mais</h2></Link>
+        </div>
+        <div className="flex pt-6 gap-6 overflow-auto whitespace-nowrap no-scrollbar  ">
+          {topInstitutions.map((elemento, index) =>
+            <motion.div
+              key={index}
 
-            initial={{
-              x: -100, // Fora da tela à esquerda
-              opacity: 0
-            }}
-            animate={{
-              x: 0, // Move para a posição inicial
-              opacity: 1
-            }}
-            transition={{
-              delay: index * 0.15
-            }}
-          >
-            <div className=" flex flex-col bg-blue-primary  w-56 h-64 rounded-xl p-4 pl-5 gap-5">
-              <div className="text-white-background  text-2xl whitespace-normal">{elemento.name}</div>
-              <div className="bg-gray-text text-white rounded-lg text-center text-xs">{elemento.local}</div>
-              <div className="text-white text-base whitespace-normal">{elemento.description}</div>
-            </div>
-          </motion.div>
-        )}
-      </div>
-      <div className="flex gap-36 pt-6  pl-6 items-center">
-        <h1 className="text-black text-base font-medium">Ações anunciadas</h1>
-        <Link href="/project/main"><h2 className="text-gray-text text-sm">Ver mais</h2></Link>
-      </div>
-      <div className="flex flex-col pt-4 gap-2.5 pl-6 pr-6 100-vh bg-white-background overflow-y-auto h-screen">
-        {topProjects.map((projeto, index) =>
-          <motion.div
-            initial={{
-              y: 100,
-              scale: 1,
-              opacity: 0
-            }}
-            animate={{
-              y: 0,
-              scale: [1, 0.99, 1],
-              opacity: 2
-            }}
+              initial={{
+                x: -100, // Fora da tela à esquerda
+                opacity: 0
+              }}
+              animate={{
+                x: 0, // Move para a posição inicial
+                opacity: 1
+              }}
+              transition={{
+                delay: index * 0.15
+              }}
+            >
+              <Link href={`/institution/info?i=${elemento._id}`}>
+                <div className="flex flex-col bg-blue-primary  h-full w-60 rounded-xl p-4 pl-5 gap-5 ">
+                  <div className="text-white-background  text-2xl whitespace-normal">{elemento.name}</div>
+                  <div className="bg-gray-text text-white rounded-lg text-center text-xs">{elemento.local}</div>
+                
+                  <TruncatedText text={elemento.description} maxLength={80}/>
+                
+                </div>
+              </Link>
+            </motion.div>
+          )}
+        </div>
+        <div className="flex pt-6 justify-between text-center bg-white">
+          <h1 className="text-black text-base font-medium">Ações anunciadas</h1>
+          <Link href="/project/main"><h2 className="text-gray-text text-sm">Ver mais</h2></Link>
+        </div>
+        <div className="flex flex-col pt-4 gap-2.5">
+          {topProjects.map((projeto, index) =>
+            <motion.div
+              initial={{
+                y: 100,
+                scale: 1,
+                opacity: 0
+              }}
+              animate={{
+                y: 0,
+                scale: [1, 0.99, 1],
+                opacity: 2
+              }}
 
-            transition={{
-              delay: index * 0.15
-            }}
-            key={index}
-          ><div>
-              <div className="text-blue-primary text-base font-medium">{projeto.name}</div>
-              <div className="text-orange-primary text-sm">{projeto.institution_name}</div>
-              <div className="flex gap-2.5">
-                <div className="text-gray-text text-sm">{projeto.date}</div>
-                <div className="text-gray-text text-sm">{projeto.applicants} inscritos</div>
+              transition={{
+                delay: index * 0.15
+              }}
+              key={index}
+            >
+              <div className="border-b">
+                <div className="text-blue-primary text-base font-medium">{projeto.name}</div>
+                <div className="text-orange-primary text-sm">{projeto.institution_name}</div>
+                <div className="flex gap-2.5">
+                  <div className="text-gray-text text-sm">{projeto.date}</div>
+                  <div className="text-gray-text text-sm ">{projeto.applicants} inscritos</div>
+                </div>
               </div>
-              <hr></hr>
-            </div>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
+        </div>
       </div>
+      <div className="h-40"></div>
       <div>
-        <Footer/>
+        <Footer />
       </div>
     </div >
   );

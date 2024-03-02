@@ -15,7 +15,8 @@
     "motion": "^10.17.0",
     "next": "14.1.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-star-ratings": "^2.3.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
