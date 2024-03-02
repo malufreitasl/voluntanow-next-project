@@ -2,6 +2,7 @@ const { Notification, MenuIcon, FilterIcon, SearchIcon } = require("./icons/icon
 import Image from "next/image";
 import { useState, } from 'react';
 import { motion } from "framer-motion"
+import Link from "next/link";
 
 
 function NavBar() {
@@ -49,8 +50,8 @@ function DropdownMenuIcon() {
       {showDropdown && (
         <div className="flex flex-col absolute gap-6 items-center right-0 text-white h-48 w-44 mt-2 bg-orange-primary rounded-lg border-2 justify-center">
           <a href="#" className="block px-4 py-2 hover:bg-blue-primary hover:text-white hover:rounded-2xl hover:font-medium hover:w-36 hover:text-center ">Definições</a>
-          <a href="#" className="block px-4 py-2 hover:bg-blue-primary  hover:text-white hover:rounded-2xl hover:font-medium hover:w-36 hover:text-center">Ajuda</a>
-          <a href="#" className="block px-4 py-2 hover:bg-blue-primary  hover:text-white hover:rounded-2xl hover:font-medium hover:w-36 hover:text-center">Login</a>
+          <a href="#" className="block px-4 py-2 hover:bg-blue-primary  hover:text-white hover:rounded-2xl hover:font-medium hover:w-36 hover:text-center">Sobre Nós</a>
+          <Link href="../login_pages/login" className="block px-4 py-2 hover:bg-blue-primary  hover:text-white hover:rounded-2xl hover:font-medium hover:w-36 hover:text-center">Login</Link>
         </div>
       )}
     </div>
