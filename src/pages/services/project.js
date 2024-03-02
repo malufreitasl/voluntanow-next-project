@@ -1,6 +1,6 @@
 const { findAllProjects } = require("../data/project");
-import moment from 'moment';
-import { findProjectById } from '../data/application';
+const { findProjectById } = require ('../data/application');
+// const { findProjectByIdNew } = require("../data/project");
 
 async function loadProjects() {
     const allProjects = await findAllProjects();
@@ -8,9 +8,9 @@ async function loadProjects() {
 }
 
 async function loadAllProjectDataById(projectID) {
-    const allInstitutionInfo = await findProjectById(projectID);
-    return allInstitutionInfo;
+    // const allProjectInfo = await findProjectByIdNew(projectID);
+    const allProjectInfo = await findProjectById(projectID);
+    return allProjectInfo;
 }
-
 
 module.exports = { loadProjects, loadAllProjectDataById };

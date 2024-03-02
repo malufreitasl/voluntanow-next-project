@@ -37,7 +37,7 @@ export default function Home() {
     }
   };
 
-  const TruncatedText = ({text, maxLength}) => {
+  const TruncatedText = ({ text, maxLength }) => {
     if (text.length <= maxLength) {
       return <div>{elemento.description}</div>
     }
@@ -82,9 +82,9 @@ export default function Home() {
                 <div className="flex flex-col bg-blue-primary  h-full w-60 rounded-xl p-4 pl-5 gap-5 ">
                   <div className="text-white-background  text-2xl whitespace-normal">{elemento.name}</div>
                   <div className="bg-gray-text text-white text-xs py-1 px-2.5 rounded-full overflow-hidden max-w-min ">{elemento.local}</div>
-                
-                  <TruncatedText text={elemento.description} maxLength={80}/>
-                
+
+                  <TruncatedText text={elemento.description} maxLength={80} />
+
                 </div>
               </Link>
             </motion.div>
@@ -113,14 +113,16 @@ export default function Home() {
               }}
               key={index}
             >
-              <div className=" border-b border-gray-text pb-2">
-                <div className="text-blue-primary text-base font-medium">{projeto.name}</div>
-                <div className="text-orange-primary text-sm">{projeto.institution_name}</div>
-                <div className="flex gap-2.5">
-                  <div className="text-gray-text text-sm">{projeto.date}</div>
-                  <div className="text-gray-text text-sm ">{projeto.applicants} inscritos</div>
+              <Link href={`/project/info?i=${projeto._id}`}>
+                <div className=" border-b border-gray-text pb-2">
+                  <div className="text-blue-primary text-base font-medium">{projeto.name}</div>
+                  <div className="text-orange-primary text-sm">{projeto.institution_name}</div>
+                  <div className="flex gap-2.5">
+                    <div className="text-gray-text text-sm">{projeto.date}</div>
+                    <div className="text-gray-text text-sm ">{projeto.applicants} inscritos</div>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </motion.div>
           )}
         </div>

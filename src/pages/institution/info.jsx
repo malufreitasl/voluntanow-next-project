@@ -31,7 +31,7 @@ export default function InfoInstitution() {
         if (i) {
             fetchInstitutionInfo();
         }
-    }, [i]);
+    }, []);
 
     return (
         <>
