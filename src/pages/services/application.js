@@ -1,4 +1,4 @@
-const { insertApplication, findTopApplications, findTopByInstitutions, findTopByProjects, findAllInstitutionsInfo } = require("../data/application");
+const { insertApplication, findTopApplications, findTopByInstitutions, findTopByProjects, findAllInstitutionsInfo, getAllProjectsInfoFromApplications } = require("../data/application");
 
 async function createApplication(institution_id, project_id, volunteer_id) {
     return await insertApplication(institution_id, project_id, volunteer_id);
@@ -19,13 +19,14 @@ async function loadTopByProjects() {
     return allProjects;
 }
 
+async function getAllProjectsInfo() {
+    const allProjects = await getAllProjectsInfoFromApplications();
+    return allProjects;
+}
+
 async function loadAllInstitutionInfo() {
     const allProjects = await findAllInstitutionsInfo();
     return allProjects;
 }
 
-
-
-
-
-module.exports = { createApplication, loadTopApplications, loadTopByInstitutions, loadTopByProjects, loadAllInstitutionInfo }
+module.exports = { createApplication, loadTopApplications, loadTopByInstitutions, loadTopByProjects, loadAllInstitutionInfo, getAllProjectsInfo }

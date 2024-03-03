@@ -55,7 +55,7 @@ export default function InfoInstitution() {
                         <p className="text-justify text-base text-black">{institutionData?.institution?.description}</p>
                     </div>
                     <div>
-                        <ProjectsList projects={institutionData.projects}/>
+                        <ProjectsList projects={institutionData?.projects}/>
                     </div>
                     <div className="flex flex-col gap-3">
                         <h2 className="text-xl">Contactos</h2>

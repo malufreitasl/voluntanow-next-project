@@ -1,5 +1,5 @@
 const { findInstitutionById } = require("../data/application");
-const { findAllInstitutions } = require("../data/institution");
+const { findAllInstitutions, findAllInstitutionsForSearch } = require("../data/institution");
 
 async function loadInstitutions() {
     const allInstitutions = await findAllInstitutions();
@@ -11,4 +11,9 @@ async function loadAllInstitutionDataById(institution_id) {
     return allInstitutionInfo;
 }
 
-module.exports = { loadInstitutions, loadAllInstitutionDataById };
+async function getAllInstitutionsForSearch() {
+    const allProjects = await findAllInstitutionsForSearch();
+    return allProjects;
+}
+
+module.exports = { loadInstitutions, loadAllInstitutionDataById, getAllInstitutionsForSearch };

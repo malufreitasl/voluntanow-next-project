@@ -21,8 +21,8 @@ export default function InfoProject() {
                 if (!response.ok) {
                     throw new Error('Failed to fetch project data');
                 }
-                const data = await response.json();
-                setProjectsData(data[0].project[0]);
+                const project = await response.json();
+                setProjectsData(project);
             } catch (error) {
                 console.error('Failed to fetch project data:', error);
             }
@@ -31,7 +31,7 @@ export default function InfoProject() {
         if (i) {
             fetchfoProjectInfo();
         }
-    }, [])
+    }, [i])
 
     return (
         <>
@@ -44,14 +44,17 @@ export default function InfoProject() {
                         <div className="text-xl text-orange-primary">{projectsData?.insitution_name}</div>
                         <div className="flex gap-4 pt-1">
                             <div className=" text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{projectsData?.date}</div>
-                            <div className=" text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{`${projectsData?.applicants} ${projectsData?.applicants === 1 ? "pessoa já inscrita" : "pessoas já inscritas"}`} </div>
+                            {projectsData?.applicants >= 1 ?
+                                <div class="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{projectsData.applicants === 1 ? projectsData.applicants + " pessoa já inscrita" : projectsData.applicants + " pessoas já inscritas"} </div>
+                                : ""
+                            }
                         </div>
                     </div>
                     <div className="flex flex-col gap-3">
                         <h1 className="text-black text-xl font-medium">Descrição da Atividade</h1>
                         <div className="text-base text-black text-justify overflow-auto">{projectsData?.description}</div>
                         <div className="flex  justify-center ">
-                            <Link href="../login_pages/meinscrever" className=" flex justify-center bg-orange-primary text-white w-44 h-10 rounded-lg items-center justify-center hover:bg-blue-primary">Quero me inscrever!</Link>
+                            <Link href="../login_pages/meinscrever" className=" flex justify-center bg-orange-primary text-white w-44 h-10 rounded-lg items-center hover:bg-blue-primary">Quero me inscrever!</Link>
                         </div>
                     </div>
 

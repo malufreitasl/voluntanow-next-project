@@ -8,4 +8,10 @@ async function findAllInstitutions() {
     return allInstitutions.toArray();
 }
 
-module.exports = { findAllInstitutions };
+async function findAllInstitutionsForSearch()
+{
+  const collection = await getMongoCollection(collectionName);
+  return collection.find({}, { projection: { _id: 1, name: 1 } }).toArray();
+}
+
+module.exports = { findAllInstitutions, findAllInstitutionsForSearch };

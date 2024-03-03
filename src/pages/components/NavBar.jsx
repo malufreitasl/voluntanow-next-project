@@ -1,11 +1,66 @@
 const { Notification, MenuIcon, FilterIcon, SearchIcon } = require("./icons/icons");
 import Image from "next/image";
-import { useState, } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from "framer-motion"
 import Link from "next/link";
 
-
 function NavBar() {
+
+  const [search, setSearch] = useState("");
+  const [sugestoes, setSugestoes] = useState([]);
+  const [allPesquisas, setAllPesquisas] = useState([])
+
+  useEffect(() => {
+    const getAllProjectsForSearch = async () => {
+      try {
+        const response = await fetch('../api/project/all-projects-for-search');
+        if (response.ok) {
+          const data = await response.json();
+          return data;
+        }
+        return [];
+      } catch (error) {
+        console.error('Fail to fetch all projects data:', error);
+      }
+    };
+
+    const getAllInstitutionsForSearch = async () => {
+      try {
+        const response = await fetch('../api/institution/all-institutions-for-search');
+        if (response.ok) {
+          const data = await response.json();
+          return data;
+        }
+        return [];
+      } catch (error) {
+        console.error('Fail to fetch all institutions data:', error);
+      }
+    };
+
+    Promise.all([getAllInstitutionsForSearch(), getAllProjectsForSearch()])
+      .then(([institutions, projects]) => {
+        const pesquisas = [...institutions, ...projects];
+        setAllPesquisas(pesquisas);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
+  }, []);
+
+  const handleInputChange = (value) => {
+    setSearch(value);
+    const sugestoesFiltradas = allPesquisas
+      .filter(pesquisa => pesquisa.name.toLowerCase().includes(value.toLowerCase()))
+      .slice(0, 5);
+    setSugestoes(sugestoesFiltradas);
+  };
+
+  const selecionarSugestao = (sugestao) => {
+    setSearch(sugestao)
+    setSugestoes([]);
+  };
+
   return (
     <div className="fixed top-0 left-0 w-full bg-white z-50 ">
       <div className="px-6 ">
@@ -25,7 +80,25 @@ function NavBar() {
           <div className="relative flex items-center">
             <div className="flex absolute ml-4"><SearchIcon /></div>
           </div>
-          <input type="search" name="search" id="search" placeholder="Pesquisa" className="flex w-full h-12 bg-gray-terciary shadow-inner rounded-lg pl-10" />
+
+          <div className='relative flex items-center mt-3 cursor-pointer border-b-4'>
+            {(
+              <>
+                <input type="search" value={search.value} onChange={(e) => handleInputChange(e.target.value)} name="search" id="search" placeholder="Pesquisa" className="flex w-full h-12 bg-gray-terciary shadow-inner rounded-lg pl-10" />
+                <ul className="absolute bottom-full w-full bg-azul text-letra font-bold shadow-md mt-1 rounded-md z-10">
+                  {sugestoes.map((sugestao, index) => (
+                    <li key={index} className="p-2 hover:bg-gray-200 cursor-pointer" onClick={() => selecionarSugestao(sugestao)}>
+                      {
+                        sugestao.institution_id ? <Link href={`/project/info?i=${sugestao._id}`}>{sugestao.name}</Link> : <Link href={`/institution/info?i=${sugestao._id}`}>{sugestao.name}</Link>
+                      }
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+
+          </div>
+
           <Filters />
         </div>
       </div>
@@ -80,7 +153,7 @@ function Filters() {
         <button className="pt-2.5 pl-2">
           <FilterIcon />
         </button>
-        
+
       </div >
       {/* Botões */}
 
