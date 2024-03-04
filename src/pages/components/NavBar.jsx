@@ -20,7 +20,11 @@ function NavBar() {
             <DropdownMenuIcon />
           </div>
         </div>
-
+        <div className="flex flex-grow justify-end pt-20  gap-7 items-center">
+          <Link href="../notification/notifications"><Notification /></Link>
+          <DropdownMenuIcon />
+        </div>
+      </div>
         <div className="flex justify-center items-center pt-4">
           <div className="relative flex items-center">
             <div className="flex absolute ml-4"><SearchIcon /></div>

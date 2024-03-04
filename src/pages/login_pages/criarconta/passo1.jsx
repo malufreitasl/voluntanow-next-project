@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Footer } from "../components/Footer";
+import { Footer } from "../../components/Footer";
 
-export default function LogIn() {
+export default function CriarConta1() {
     
     return (
         <>
@@ -16,8 +16,7 @@ export default function LogIn() {
                     <input type="search" name="search" id="search" className="w-80 h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" />
                     <p className="text-sm mt-2">Palavra Passe</p>
                     <input type="password" name="password" id="password" className="w-80 h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" />
-                    <button className="mt-8 w-80 h-12 bg-orange-primary text-white shadow-inner rounded-lg"><Link href="../index">Login</Link></button>
-                    <button className="mt-2 w-80 h-12 bg-cartsFilter rounded-lg"><Link href="../login_pages/criarconta/passo1">Criar conta</Link></button>
+                    <button className="mt-28 w-80 h-12 text-white bg-orange-primary rounded-lg"><Link href="./passo2">Próximo passo... 1 de 3</Link></button>
                 </div>
                 
             </div>

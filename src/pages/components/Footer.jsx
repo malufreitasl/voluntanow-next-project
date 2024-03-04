@@ -8,7 +8,7 @@ function Footer() {
             <Link href="/"><HomeIcon /></Link>
             <Link href="/institution/main"><NoteIcon /></Link>
             <Link href="/project/main"><HandsIcon/></Link>
-            <UserIcon />
+            <Link href="../login_pages/profile"><UserIcon /></Link>    
         </div>
     )
 }
