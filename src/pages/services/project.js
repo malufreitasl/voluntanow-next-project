@@ -17,11 +17,14 @@ async function loadProjects() {
 
 async function loadAllProjectDataById(projectID) {
     const allProjectInfo = await findProjectById(projectID);
+
     if (!(allProjectInfo?.length > 0))
     {
         return await loadProjectById(projectID);
     }
 
+    allProjectInfo[0].project[0]['institution_name'] = allProjectInfo[0].institution.name;
+    allProjectInfo[0].project[0]['institution_id'] = allProjectInfo[0].institution._id;
     return allProjectInfo[0].project[0];
 }
 
