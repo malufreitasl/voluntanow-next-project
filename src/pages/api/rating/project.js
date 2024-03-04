@@ -1,4 +1,4 @@
-import { loadProjectMeanRating } from "@/pages/services/rating";
+import { loadProjectMeanRating } from "@/pages/services/project_rating";
 
 export default async function handler(req, res) {
     try {
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
             if (projectMeanRating) {
                 return res.status(200).json(projectMeanRating);
             } else {
-                return res.status(404).json({ error: "Project not found" });
+                return res.status(404).json({ error: "Project rating not found" });
             }
         }
     } catch (err) {

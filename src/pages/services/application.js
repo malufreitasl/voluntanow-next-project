@@ -6,7 +6,6 @@ async function createApplication(institution_id, project_id, volunteer_id) {
 
 async function loadTopApplications() {
     const allInstitutions = await findTopApplications();
-    console.log(allInstitutions);
     return allInstitutions;
 }
 
@@ -24,6 +23,8 @@ async function loadAllInstitutionInfo() {
     const allProjects = await findAllInstitutionsInfo();
     return allProjects;
 }
+
+
 
 
 
