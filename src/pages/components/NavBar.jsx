@@ -3,9 +3,11 @@ import Image from "next/image";
 import { useState, useEffect } from 'react';
 import { motion } from "framer-motion"
 import Link from "next/link";
+import { useRouter } from 'next/router';
 
 function NavBar() {
 
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [sugestoes, setSugestoes] = useState([]);
   const [allPesquisas, setAllPesquisas] = useState([])
@@ -55,16 +57,20 @@ function NavBar() {
       .filter(pesquisa => pesquisa.name.toLowerCase().includes(value.toLowerCase()))
       .slice(0, 5);
     setSugestoes(sugestoesFiltradas);
-
     setShowPesquisas(value.length != 0)
   };
 
   const selecionarSugestao = (sugestao) => {
     setSearch(sugestao)
     setSugestoes([]);
+
+    // as vezes o link em baixo nao funciona, assim por segurança fica aqui a redirecionar
+    if (sugestao.institution_id) {
+      router.push(`/project/info?i=${sugestao._id}`);
+    } else {
+      router.push(`/institution/info?i=${sugestao._id}`);
+    }
   };
-
-
 
   return (
     <div className="fixed top-0 left-0 w-full bg-white-background z-50 ">
@@ -75,10 +81,10 @@ function NavBar() {
             <div className="pt-14">
               <Image src="/images/logo.png" width="80" height="80" />
             </div>
-          
-          <div className="flex flex-grow justify-end pt-20 gap-7 items-center">
-            <Link href="../notification/notifications"><Notification /></Link>
-            <DropdownMenuIcon />
+
+            <div className="flex flex-grow justify-end pt-20 gap-7 items-center">
+              <Link href="../notification/notifications"><Notification /></Link>
+              <DropdownMenuIcon />
             </div>
           </div>
 
@@ -96,9 +102,9 @@ function NavBar() {
                     <ul className="absolute top-full w-full bg-gray-terciary shadow-md mt-1 rounded-lg z-10">
                       {sugestoes.map((sugestao, index) => (
                         <li key={index} className="p-2  text-blue-primary cursor-pointer" onClick={() => selecionarSugestao(sugestao)}>
-                          {
-                            sugestao.institution_id ? <Link href={`/project/info?i=${sugestao._id}`}>{sugestao.name}</Link> : <Link href={`/institution/info?i=${sugestao._id}`}>{sugestao.name}</Link>
-                          }
+                          <Link href={sugestao.institution_id ? `/project/info?i=${sugestao._id}` : `/institution/info?i=${sugestao._id}`}>
+                            {sugestao.name}
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -107,8 +113,6 @@ function NavBar() {
               )}
               <Filters />
             </div>
-
-
           </div>
         </div>
       </div>
