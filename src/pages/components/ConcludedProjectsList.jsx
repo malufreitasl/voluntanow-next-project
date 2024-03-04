@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import StarRatings from 'react-star-ratings';
 
@@ -37,27 +38,29 @@ function ConcludedProjectsList({ finishedProjects }) {
             <h2 className="font-medium text-xl text-black ">Ações que já decorreram</h2>
             {finishedProjects?.map((project, index) => (
                 <div key={index}>
-                    <div className={`pb-2 ${index === finishedProjects.length - 1 ? "border-0" : "border-b border-gray-text"}`}>
-                        <div className="text-blue-primary text-base font-medium">{project?.name}</div>
-                        <div className="text-orange-primary text-sm">{project?.address}</div>
-                        <div className="flex gap-2.5">
-                            <div className="text-gray-text text-sm">{project?.date}</div>
-                            <div className="text-gray-text text-sm">{`${project?.applicants} ${project?.applicants === 1 ? "pessoa inscrita" : "pessoas inscritas"}`}</div>
+                    <Link href={`/project/info?i=${project._id}`}> 
+                        <div className={`pb-2 ${index === finishedProjects.length - 1 ? "border-0" : "border-b border-gray-text"}`}>
+                            <div className="text-blue-primary text-base font-medium">{project?.name}</div>
+                            <div className="text-orange-primary text-sm">{project?.address}</div>
+                            <div className="flex gap-2.5">
+                                <div className="text-gray-text text-sm">{project?.date}</div>
+                                <div className="text-gray-text text-sm">{`${project?.applicants} ${project?.applicants === 1 ? "pessoa inscrita" : "pessoas inscritas"}`}</div>
+                            </div>
+                            <div>
+                                { starRatings[project._id] !== "Not Found"? (
+                                    <StarRatings
+                                        rating={starRatings[project._id]}
+                                        starRatedColor="#EB4000"
+                                        numberOfStars={5}
+                                        starDimension="15px"
+                                        starSpacing="1px"
+                                        name={`rating-${index}`}/>
+                                ) : (
+                                    <p className='text-gray-terciary text-xs'>Sem avaliações ainda</p>
+                                )}
+                            </div>
                         </div>
-                        <div>
-                            { starRatings[project._id] !== "Not Found"? (
-                                <StarRatings
-                                    rating={starRatings[project._id]}
-                                    starRatedColor="#EB4000"
-                                    numberOfStars={5}
-                                    starDimension="15px"
-                                    starSpacing="1px"
-                                    name={`rating-${index}`}/>
-                            ) : (
-                                <p className='text-gray-terciary text-xs'>Sem avaliações ainda</p>
-                            )}
-                        </div>
-                    </div>
+                    </Link>
                 </div>
             ))}
         </div>

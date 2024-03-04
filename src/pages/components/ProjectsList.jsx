@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { motion } from "framer-motion";
 import { ConcludedProjectsList } from "./ConcludedProjectsList";
+import Link from 'next/link';
 
 function ProjectsList({ projects }){
     const currentDate = moment();
@@ -28,14 +29,16 @@ function ProjectsList({ projects }){
                     }}
                     key={index}
                     >
-                        <div className={`pb-2 ${index === recentProjects.length - 1? "border-0" : "border-b border-gray-text" }`}>
-                            <div className="text-blue-primary text-base font-medium">{project?.name}</div>
-                            <div className="text-orange-primary text-sm">{project?.address}</div>
-                            <div className="flex gap-2.5">
-                                <div className="text-gray-text text-sm">{project?.date}</div>
-                                <div className="text-gray-text text-sm">{`${project?.applicants} ${project?.applicants === 1 ? "pessoa já inscrita" : "pessoas já inscritas"}`}</div>
+                        <Link href={`/project/info?i=${project._id}`}>                           
+                            <div className={`pb-2 ${index === recentProjects.length - 1? "border-0" : "border-b border-gray-text" }`}>
+                                <div className="text-blue-primary text-base font-medium">{project?.name}</div>
+                                <div className="text-orange-primary text-sm">{project?.address}</div>
+                                <div className="flex gap-2.5">
+                                    <div className="text-gray-text text-sm">{project?.date}</div>
+                                    <div className="text-gray-text text-sm">{`${project?.applicants} ${project?.applicants === 1 ? "pessoa já inscrita" : "pessoas já inscritas"}`}</div>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     </motion.div>
                 ))}
             </div>
