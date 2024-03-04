@@ -71,14 +71,13 @@ function NavBar() {
       <div className="px-6 ">
 
         <div className=" flex items-center">
-          <div className="pt-14">
+          <div className="pt-10">
             <Image src="/images/logo.png" width="80" height="80" />
           </div>
-
-          <div className="flex flex-grow justify-end pt-20  gap-7 items-center">
-            <Notification />
-            <DropdownMenuIcon />
-          </div>
+        </div>
+        <div className="flex flex-grow justify-end gap-7 items-center">
+          <Link href="../notification/notifications"><Notification /></Link>
+          <DropdownMenuIcon />
         </div>
         <div className="flex justify-center items-center pt-4">
           <div className='relative flex w-full items-center mt-3 cursor-pointer '>
@@ -107,9 +106,8 @@ function NavBar() {
 
 
         </div>
+        </div>
       </div>
-    </div>
-
   )
 }
 
