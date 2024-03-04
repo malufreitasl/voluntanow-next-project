@@ -52,7 +52,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className={"bg-white-background h-screen w-screen"}>
+    <div className={"h-screen w-screen"}>
       <div>
         <NavBar />
       </div>
