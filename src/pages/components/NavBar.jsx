@@ -55,7 +55,7 @@ function NavBar() {
       .filter(pesquisa => pesquisa.name.toLowerCase().includes(value.toLowerCase()))
       .slice(0, 5);
     setSugestoes(sugestoesFiltradas);
-    
+
     setShowPesquisas(value.length != 0)
   };
 
@@ -64,50 +64,55 @@ function NavBar() {
     setSugestoes([]);
   };
 
- 
+
 
   return (
-    <div className="fixed  w-full bg-white z-50 ">
-      <div className="px-6 ">
+    <div className="fixed top-0 left-0 w-full bg-white-background z-50 ">
+      <div className="fixed w-full bg-white-background z-50">
+        <div className="px-6 ">
 
-        <div className=" flex items-center">
-          <div className="pt-10">
-            <Image src="/images/logo.png" width="80" height="80" />
+          <div className=" flex items-center">
+            <div className="pt-14">
+              <Image src="/images/logo.png" width="80" height="80" />
+            </div>
+          
+          <div className="flex flex-grow justify-end pt-20 gap-7 items-center">
+            <Link href="../notification/notifications"><Notification /></Link>
+            <DropdownMenuIcon />
+            </div>
           </div>
-        </div>
-        <div className="flex flex-grow justify-end gap-7 items-center">
-          <Link href="../notification/notifications"><Notification /></Link>
-          <DropdownMenuIcon />
-        </div>
-        <div className="flex justify-center items-center pt-4">
-          <div className='relative flex w-full items-center mt-3 cursor-pointer '>
-            {(
-              <>
-                <div className="relative flex items-center">
-                  <div className="flex absolute ml-3"><SearchIcon /></div>
-                </div>
-                
+
+
+          <div className="flex justify-center items-center pt-4">
+            <div className='relative flex w-full items-center mt-3 cursor-pointer '>
+              {(
+                <>
+                  <div className="relative flex items-center">
+                    <div className="flex absolute ml-3"><SearchIcon /></div>
+                  </div>
+
                   <input type="search" value={search.value} onChange={(e) => handleInputChange(e.target.value)} name="search" id="search" placeholder="Pesquisa" className="flex w-full h-12 bg-gray-terciary shadow-inner rounded-lg pl-10" />
                   {(search.value !== null && showPesquisas) && ( //isso não está a fazer com que feche as sugestões caso o campo input esteja vazio
-                <ul className="absolute top-full w-full bg-gray-terciary shadow-md mt-1 rounded-lg z-10">
-                  {sugestoes.map((sugestao, index) => (
-                    <li key={index} className="p-2  text-blue-primary cursor-pointer" onClick={() => selecionarSugestao(sugestao)}>
-                      {
-                        sugestao.institution_id ? <Link href={`/project/info?i=${sugestao._id}`}>{sugestao.name}</Link> : <Link href={`/institution/info?i=${sugestao._id}`}>{sugestao.name}</Link>
-                      }
-                    </li>
-                  ))}
-                </ul>
+                    <ul className="absolute top-full w-full bg-gray-terciary shadow-md mt-1 rounded-lg z-10">
+                      {sugestoes.map((sugestao, index) => (
+                        <li key={index} className="p-2  text-blue-primary cursor-pointer" onClick={() => selecionarSugestao(sugestao)}>
+                          {
+                            sugestao.institution_id ? <Link href={`/project/info?i=${sugestao._id}`}>{sugestao.name}</Link> : <Link href={`/institution/info?i=${sugestao._id}`}>{sugestao.name}</Link>
+                          }
+                        </li>
+                      ))}
+                    </ul>
                   )}
-              </>
-            )}
-            <Filters />
+                </>
+              )}
+              <Filters />
+            </div>
+
+
           </div>
-
-
-        </div>
         </div>
       </div>
+    </div>
   )
 }
 
@@ -125,7 +130,7 @@ function DropdownMenuIcon() {
     <div className="relative top-0 z-50 pr-2.5">
       <button className="bg-white Z-50" onClick={toggleDropdown}><MenuIcon /></button>
       {showDropdown && (
-        <div className="flex flex-col absolute gap-6 items-center right-0 text-white h-48 w-44 mt-2 bg-blue-primary rounded-lg border-2 justify-center">
+        <div className="flex flex-col absolute gap-6 items-center right-0 text-white h-48 w-44 mt-2 bg-blue-primary rounded-lg border justify-center">
           <a href="#" className="block px-4 py-2 ">Definições</a>
           <a href="#" className="block px-4 py-2">Sobre Nós</a>
           <Link href="../login_pages/login" className="block px-4 py-2">Login</Link>
