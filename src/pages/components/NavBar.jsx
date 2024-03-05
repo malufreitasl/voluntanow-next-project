@@ -14,6 +14,7 @@ function NavBar() {
             <Image src="/images/logo.png" width="80" height="80" />
           </div>
         </div>
+      </div>
         <div className="flex flex-grow justify-end gap-7 items-center">
           <Link href="../notification/notifications"><Notification /></Link>
           <DropdownMenuIcon />

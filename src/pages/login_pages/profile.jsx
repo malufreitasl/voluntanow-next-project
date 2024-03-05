@@ -31,6 +31,8 @@ export default function Home() {
     getUserInfo();
   }, []); 
 
+
+export default function Profile() {
   return (
     <div className={"bg-white-background h-screen w-screen"}>
       <div>
