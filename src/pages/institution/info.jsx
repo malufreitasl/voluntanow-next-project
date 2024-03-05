@@ -22,7 +22,8 @@ export default function InfoInstitution() {
                     throw new Error('Failed to fetch institutions data');
                 }
                 const data = await response.json();
-                setInstitutionData(data[0]);
+               
+                setInstitutionData(data);
             } catch (error) {
                 console.error('Failed to fetch institutions data:', error);
             }
@@ -42,7 +43,7 @@ export default function InfoInstitution() {
                         <h1 className="text-2xl font-semibold text-black">{institutionData?.institution?.name}</h1>
                         <p className="text-orange-primary text-lg">{institutionData?.institution?.local}</p>
                         <div className="flex gap-4 pt-1">
-                            <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{`${institutionData?.total_applicants} ${institutionData?.total_applicants === 1 ? "inscrição em projetos" : "inscrições em projetos"}`}</p>
+                            <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{`${institutionData?.total_applicants > 0 ? institutionData?.total_applicants : 0} ${institutionData?.total_applicants === 1 ? "inscrição em projetos" : "inscrições em projetos"}`}</p>
                             <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">
                             {institutionData?.institution_avg_rating
                                 ? `Classificação: ${institutionData?.institution_avg_rating}/5`

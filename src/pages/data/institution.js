@@ -1,4 +1,5 @@
 const { getMongoCollection } = require('./mongodb')
+const { ObjectId } = require('mongodb');
 const collectionName = "institution"
 
 async function findAllInstitutions() {
@@ -7,6 +8,12 @@ async function findAllInstitutions() {
 
     return allInstitutions.toArray();
 };
+
+async function loadInstitutionById(id) {
+  const collection = await getMongoCollection(collectionName);
+  const institution = await collection.findOne({ _id: ObjectId.createFromHexString(id) })
+  return institution
+}
 
 async function findAllInstitutionsForSearch()
 {
@@ -100,4 +107,4 @@ async function findInstitutionInfo(username) {
       return institutionInfo;
 };
 
-module.exports = { findAllInstitutions, findInstitutionInfo, findAllInstitutionsForSearch };
+module.exports = { findAllInstitutions, findInstitutionInfo, findAllInstitutionsForSearch, loadInstitutionById};

@@ -18,16 +18,13 @@ export default function MeInscrever() {
                     throw new Error('Failed to fetch project data');
                 }
                 const project = await response.json();
-                console.log("-----------------------------------------------------")
-                console.log(project)
+                
                 setProjectsData(project);
             } catch (error) {
                 console.error('Failed to fetch project data:', error);
             }
         };
 
-        console.log("tttttttttttttttttttttttttttttttttttttttttttttttttttttttt")
-        console.log(i)
         if (i) {
             fetchfoProjectInfo();
         }

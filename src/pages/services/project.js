@@ -1,15 +1,21 @@
-// const { findAllProjects } = require("../data/project");
 const { findProjectById } = require('../data/application');
 const { getAllProjectsInfo } = require('./application');
 const { loadAllProjectsInfo, loadProjectById, findAllProjectsForSearch } = require('../data/project')
+const {loadProjectMeanRating, loadAllProjectRating} = require('../services/project_rating')
 
 async function loadProjects() {
     const allProjects = await loadAllProjectsInfo();
     const allProjectsByApplications = await getAllProjectsInfo();
+    const allProjectRating = await loadAllProjectRating();
 
     allProjects.forEach(element => {
         let nrApplicant = allProjectsByApplications.find(x => String(x._id) == String(element._id))?.applicants
         element['applicants'] = nrApplicant > 0 ? nrApplicant : 0
+    });
+
+    allProjects.forEach(element => {
+        let rating = allProjectRating.find(x => String(x.project_id) == String(element._id))?.rating
+        element['institution_avg_rating'] = rating > 0 ? rating : null
     });
 
     return allProjects
