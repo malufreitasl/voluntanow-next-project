@@ -6,14 +6,14 @@ import { useEffect, useState } from "react";
 
 
 
-export default function Home() {
+export default function Profile() {
   return (
     <div className={"bg-white-background h-screen w-screen"}>
       <div>
         <NavBar />
       </div>
       <div className="flex flex-col items-center">
-        <Image src="/images/perfil.jpg" width="180" height="180" className="rounded-full mt-10" />
+        <Image src="/images/perfil.jpg" width="180" height="180" className="rounded-full mt-64" />
 
         <p className=" mt-8 text-2xl font-semibold text-black">
             Pedro Pereira, 24 anos
