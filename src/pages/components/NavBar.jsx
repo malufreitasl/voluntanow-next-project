@@ -136,7 +136,7 @@ function DropdownMenuIcon() {
       {showDropdown && (
         <div className="flex flex-col absolute gap-6 items-center right-0 text-white h-48 w-44 mt-2 bg-blue-primary rounded-lg border justify-center">
           <a href="#" className="block px-4 py-2 ">Definições</a>
-          <Link href="./about-us/main" className="block px-4 py-2">Sobre Nós</Link>
+          <Link href="../about-us/main" className="block px-4 py-2">Sobre Nós</Link>
           <Link href="../login_pages/login" className="block px-4 py-2">Login</Link>
         </div>
       )}
