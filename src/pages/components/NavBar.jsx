@@ -26,7 +26,6 @@ function NavBar() {
           <input type="search" name="search" id="search" placeholder="Pesquisa" className="flex w-full h-12 bg-gray-terciary shadow-inner rounded-lg pl-10" />
           <Filters />
         </div>
-        </div>
       </div>
   )
 }

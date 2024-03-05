@@ -30,7 +30,7 @@ export default function Home() {
 
     getUserInfo();
   }, []); 
-
+}
 
 export default function Profile() {
   return (
