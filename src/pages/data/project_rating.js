@@ -23,5 +23,10 @@ async function findProjectMeanRating(projectID) {
     return projectRating;
 }
 
-module.exports = { findProjectMeanRating };
+async function getAllProjectRating() {
+    const collection = await getMongoCollection(collectionName);
+    return await collection.find().toArray()
+}
+
+module.exports = { findProjectMeanRating, getAllProjectRating };
 

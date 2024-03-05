@@ -4,6 +4,7 @@ import { Footer } from "../components/Footer";
 import { Raleway } from "next/font/google";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import StarRatings from "react-star-ratings";
 
 
 const raleway = Raleway({ subsets: ["latin"] });
@@ -22,13 +23,14 @@ export default function ProjectPage() {
                 }
                 const data = await response.json();
                 setAllProjects(data);
+               
             } catch (error) {
                 console.error('Failed to fetch project data:', error);
             }
         };
 
         fetchAllProjects();
-        
+
     }, [])
 
     return (
@@ -65,17 +67,32 @@ export default function ProjectPage() {
                                     <div class="text-orange-primary text-sm">{elemento.institution_name}</div>
                                     <div class="flex gap-2.5">
                                         <div class="text-gray-text text-sm">{elemento.date}</div>
-                                        { elemento.applicants >= 1 ?
-                                           <div class="text-gray-text text-sm">{elemento.applicants === 1 ? elemento.applicants+ " pessoa já inscrita" : elemento.applicants +" pessoas já inscritas"} </div>
-                                        : ""
+                                        {elemento.applicants >= 1 ?
+                                            <div class="text-gray-text text-sm">{elemento.applicants === 1 ? elemento.applicants + " pessoa já inscrita" : elemento.applicants + " pessoas já inscritas"} </div>
+                                            : ""
+                                        }
+
+
+                                        
+                                    </div>
+                                    <div>
+                                        {elemento?.institution_avg_rating > 0 &&
+                                            <StarRatings
+                                                rating={elemento?.institution_avg_rating}
+                                                starRatedColor="#000035"
+                                                numberOfStars={5}
+                                                starDimension="15px"
+                                                starSpacing="1px"
+                                                name={`rating-${index}`} />
                                         }
                                     </div>
+
                                 </div>
                             </Link>
                         </motion.div>
                     )}
                 </div>
-                
+
             </div>
 
             <div className="h-40"></div>

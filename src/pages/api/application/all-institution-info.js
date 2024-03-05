@@ -1,10 +1,11 @@
 import { loadAllInstitutionInfo } from "@/pages/services/application";
+import {loadInstitutions }from "@/pages/services/institution"
 
 export default async function handler(req, res) {
     try {
         if (req.method === "GET") {
-            const allTopInstitutions = await loadAllInstitutionInfo();
-            return res.status(200).json(allTopInstitutions)
+            const allInstitutions = await loadInstitutions();
+            return res.status(200).json(allInstitutions)
         }
     } catch (err) {
         console.log(err);

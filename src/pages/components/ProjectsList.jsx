@@ -41,6 +41,9 @@ export function ProjectsList({ projects }){
                         </Link>
                     </motion.div>
                 ))}
+                {
+                  recentProjects?.length > 0 ? "" : "Não há ações publicadas."
+                }
             </div>
             {finishedProjects?.length > 0 && (
                 <ConcludedProjectsList finishedProjects={finishedProjects}/>
