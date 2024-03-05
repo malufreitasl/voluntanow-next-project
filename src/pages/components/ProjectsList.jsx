@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ConcludedProjectsList } from "./ConcludedProjectsList";
 import Link from 'next/link';
 
-function ProjectsList({ projects }){
+export function ProjectsList({ projects }){
     const currentDate = moment();
     const recentProjects = projects?.filter(project => moment(project?.date, "DD-MM-YYYY").isAfter(currentDate));
     const finishedProjects = projects?.filter(project => moment(project?.date, "DD-MM-YYYY").isBefore(currentDate));
@@ -51,5 +51,3 @@ function ProjectsList({ projects }){
         </div>
     )
 }
-
-module.exports = { ProjectsList };

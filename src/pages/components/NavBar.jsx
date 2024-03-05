@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from "framer-motion"
 import Link from "next/link";
 import { useRouter } from 'next/router';
+import { isUserLoggedIn, removeToken } from "../utils/globalFunctions";
 
 function NavBar() {
 
@@ -124,26 +125,56 @@ function NavBar() {
 
 function DropdownMenuIcon() {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false); 
+  const router = useRouter(); 
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   }
 
-  return (
+  const handleLogout = () => {
+    setShowConfirmation(true); 
+  };
 
+  const confirmLogout = () => {
+    removeToken();
+    router.push('/login_pages/login');
+  };
+
+  const cancelLogout = () => {
+    setShowConfirmation(false);
+  };
+
+  return (
     <div className="relative top-0 z-50 pr-2.5">
       <button className="bg-white Z-50" onClick={toggleDropdown}><MenuIcon /></button>
       {showDropdown && (
         <div className="flex flex-col absolute gap-6 items-center right-0 text-white h-48 w-44 mt-2 bg-blue-primary rounded-lg border justify-center">
           <a href="#" className="block px-4 py-2 ">Definições</a>
           <Link href="../about-us/main" className="block px-4 py-2">Sobre Nós</Link>
-          <Link href="../login_pages/login" className="block px-4 py-2">Login</Link>
+          {isUserLoggedIn()? (
+            <a className="block px-4 py-2" onClick={handleLogout}>Terminar Sessão</a> 
+          ):(
+            <Link href="../login_pages/login" className="block px-4 py-2">Login</Link>
+          )
+        }
+        </div>
+      )}
+      {showConfirmation && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white-background p-6 rounded-lg mx-14">
+            <p className="mb-4 text-center">Tem certeza que deseja terminar a sessão?</p>
+            <div className="flex justify-center gap-1">
+              <button onClick={confirmLogout} className="bg-orange-primary text-white px-8 rounded-md mr-2">Sim</button>
+              <button onClick={cancelLogout} className="bg-gray-200 px-4 py-2 rounded-md ml-2">Cancelar</button>
+            </div>
+          </div>
         </div>
       )}
     </div>
-
   );
 }
+
 
 let optionsFilter = [
 

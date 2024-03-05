@@ -8,7 +8,7 @@ export default function AboutUs(){
         <>
         <NavBar/>
         <div className='pt-64 px-6 w-full'>
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
             <h1>Sobre Nós</h1>
         </div>
         

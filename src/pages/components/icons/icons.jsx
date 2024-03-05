@@ -11,9 +11,9 @@ function Notification() {
 function MenuIcon({ onClick }) {
     return (
         <svg onClick={onClick} width="24" height="13" viewBox="0 0 24 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="0.975" y1="12.025" x2="23.025" y2="12.025" stroke="black" stroke-width="1.95" stroke-linecap="round" />
-            <line x1="0.975" y1="6.56846" x2="23.025" y2="6.56846" stroke="black" stroke-width="1.95" stroke-linecap="round" />
-            <line x1="0.975" y1="1.025" x2="23.025" y2="1.025" stroke="black" stroke-width="1.95" stroke-linecap="round" />
+            <line x1="0.975" y1="12.025" x2="23.025" y2="12.025" stroke="black" strokeWidth="1.95" strokeLinecap="round" />
+            <line x1="0.975" y1="6.56846" x2="23.025" y2="6.56846" stroke="black" strokeWidth="1.95" strokeLinecap="round" />
+            <line x1="0.975" y1="1.025" x2="23.025" y2="1.025" stroke="black" strokeWidth="1.95" strokeLinecap="round" />
         </svg>
 
     )
