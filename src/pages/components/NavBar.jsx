@@ -7,27 +7,25 @@ import Link from "next/link";
 
 function NavBar() {
   return (
-    <div className="fixed top-0 left-0 w-full bg-white z-50 ">
-      <div className="px-6 ">
-
+    <div className="fixed top-0 left-0 w-full z-50 bg-white-background">
+      <div className="px-6">
         <div className=" flex items-center">
-          <div className="pt-14">
+          <div className="pt-10">
             <Image src="/images/logo.png" width="80" height="80" />
           </div>
-
-          <div className="flex flex-grow justify-end pt-20  gap-7 items-center">
-            <Notification />
-            <DropdownMenuIcon />
-          </div>
         </div>
-        
       </div>
+        <div className="flex flex-grow justify-end gap-7 items-center">
+          <Link href="../notification/notifications"><Notification /></Link>
+          <DropdownMenuIcon />
+        </div>
         <div className="flex justify-center items-center pt-4">
           <div className="relative flex items-center">
             <div className="flex absolute ml-4"><SearchIcon /></div>
           </div>
           <input type="search" name="search" id="search" placeholder="Pesquisa" className="flex w-full h-12 bg-gray-terciary shadow-inner rounded-lg pl-10" />
           <Filters />
+        </div>
         </div>
       </div>
   )
@@ -50,7 +48,7 @@ function DropdownMenuIcon() {
         <div className="flex flex-col absolute gap-6 items-center right-0 text-white h-48 w-44 mt-2 bg-orange-primary rounded-lg border-2 justify-center">
           <a href="#" className="block px-4 py-2 hover:bg-blue-primary hover:text-white hover:rounded-2xl hover:font-medium hover:w-36 hover:text-center ">Definições</a>
           <a href="#" className="block px-4 py-2 hover:bg-blue-primary  hover:text-white hover:rounded-2xl hover:font-medium hover:w-36 hover:text-center">Sobre Nós</a>
-          <Link href="../login_pages/login" className="block px-4 py-2 hover:bg-blue-primary  hover:text-white hover:rounded-2xl hover:font-medium hover:w-36 hover:text-center">Login</Link>
+          <Link href="/login_pages/login" className="block px-4 py-2 hover:bg-blue-primary  hover:text-white hover:rounded-2xl hover:font-medium hover:w-36 hover:text-center">Login</Link>
         </div>
       )}
     </div>

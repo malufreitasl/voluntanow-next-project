@@ -11,12 +11,12 @@ export default function CriarConta3() {
                     <Image src="/images/logo.png" width="280" height="280" />
                 </div>
                 
-                <div className="flex flex-col ml-8 pt-4">
+                <div className="flex flex-col mx-8 pt-4">
                     <p className="text-sm">Contacto telefónico</p>
-                    <input name="phone number" id="phone number" className="w-80 h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" />
+                    <input name="phone number" id="phone number" className=" h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" />
                     <p className="text-sm mt-2">Profissão</p>
-                    <input name="profissão" id="profissão" className="w-80 h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" />
-                    <button className="mt-28 w-80 h-12 text-white bg-orange-primary rounded-lg"><Link href="../profile">Criar conta!</Link></button>
+                    <input name="profissão" id="profissão" className=" h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" />
+                    <button className="mt-28 h-12 text-white bg-orange-primary rounded-lg"><Link href="../profile">Criar conta!</Link></button>
                 </div>
                 
             </div>

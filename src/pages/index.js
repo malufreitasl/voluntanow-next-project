@@ -52,7 +52,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className={"bg-white-background h-screen w-screen"}>
+    <div className={"h-screen w-screen"}>
       <div>
         <NavBar />
       </div>
@@ -90,7 +90,7 @@ export default function Home() {
             </motion.div>
           )}
         </div>
-        <div className="flex pt-6 justify-between text-center bg-white">
+        <div className="flex pt-6 justify-between text-center">
           <h1 className="text-black text-base font-medium">Ações anunciadas</h1>
           <Link href="/project/main"><h2 className="text-gray-text text-sm">Ver mais</h2></Link>
         </div>
