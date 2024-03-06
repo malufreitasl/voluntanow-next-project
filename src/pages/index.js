@@ -9,7 +9,6 @@ export default function Home() {
   const [topInstitutions, setTopInstitutions] = useState([]);
   const [topProjects, setTopProjects] = useState([]);
 
-  // Fetch para obter dados das instituições em destaque
   const fetchTopInstitutions = async () => {
     try {
       const response = await fetch('./api/application/top-institutions');
