@@ -12,6 +12,16 @@ async function insertApplication(institution_id, project_id, volunteer_id) {
   return result.acknowledged;
 }
 
+async function findApplication(institution_id, project_id, volunteer_id) {
+  const collection = await getMongoCollection(collectionName)
+  const result = await collection.findOne({
+    institution_id:institution_id,
+    project_id:project_id,
+    volunteer_id:volunteer_id
+  })
+  return result;
+}
+
 async function findAllApplications() {
   const collection = await getMongoCollection(collectionName);
   const allInstitutions = await collection.find();
@@ -548,4 +558,4 @@ async function findProjectById(projectID) {
   return institution_info.toArray();
 }
 
-module.exports = { findAllApplications, findTopApplications, findTopByInstitutions, insertApplication, findTopByProjects, findAllInstitutionsInfo, findInstitutionById, findProjectById, getAllProjectsInfoFromApplications };
+module.exports = { findAllApplications, findTopApplications, findTopByInstitutions, insertApplication, findTopByProjects, findAllInstitutionsInfo, findInstitutionById, findProjectById, getAllProjectsInfoFromApplications, findApplication };

@@ -3,16 +3,70 @@ import { Footer } from "../components/Footer"
 import { Raleway } from "next/font/google";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
-
 
 
 const raleway = Raleway({ subsets: ["latin"] });
 
 export default function InfoProject() {
     const [projectsData, setProjectsData] = useState({});
+    const [userData, setUserData] = useState({});
+    const [buttonQueroMeInscreverDisabled, setButtonQueroMeInscreverDisabled] = useState(false)
+    const [jaEstaInscrito, setJaEstaInscrito] = useState(false)
     const router = useRouter();
     const { i } = router.query;
+
+    const createAplication = async (institution_id, project_id, volunteer_id) => {
+        try {
+            const response = await fetch(`../api/application/add`,
+                {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        "Content-Type": "application/json",
+                        "Authorization": localStorage.getItem("token")
+                    },
+                    body: JSON.stringify({
+                        'institution_id': institution_id,
+                        'project_id': project_id,
+                        'volunteer_id': volunteer_id
+                    })
+                });
+            if (!response.ok) {
+                throw new Error('Failed to create application');
+            }
+        } catch (error) {
+            console.error('Failed to create application:', error);
+        }
+    };
+
+    const loadApplication = async (institution_id, project_id, volunteer_id) => {
+        try {
+            const response = await fetch(`../api/load-application`,
+                {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        "Content-Type": "application/json",
+                        "Authorization": localStorage.getItem("token")
+                    },
+                    body: JSON.stringify({
+                        'institution_id': institution_id,
+                        'project_id': project_id,
+                        'volunteer_id': volunteer_id
+                    })
+                });
+            if (!response.ok) {
+                throw new Error('Failed to load application');
+            }
+            console.log(response)
+            return await response.json();
+        } catch (error) {
+            console.error('Failed to load application:', error);
+        }
+    };
+
+
+
 
     useEffect(() => {
         const fetchfoProjectInfo = async () => {
@@ -28,10 +82,56 @@ export default function InfoProject() {
             }
         };
 
+        const getUserInfo = async () => {
+            try {
+                const response = await fetch("/api/user", {
+                    method: "GET",
+                    headers: {
+                        'Accept': 'application/json',
+                        "Content-Type": "application/json",
+                        "Authorization": localStorage.getItem("token")
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                let userInformation = await response.json();
+
+                if (!userInformation || userInformation.length == 0) {
+                    setUserData({})
+                } else {
+                    setUserData(userInformation[0]);
+                    //TODO verificar este /api/user porque nao tras os projetos todos em que o user esta inscrito
+                    let encontrouOProjetoNoUser = userInformation[0].projects.find(x => x._id == i)
+                    //verifica novamente por outra api a ver se nao existe a application
+                    if(!encontrouOProjetoNoUser){
+                        encontrouOProjetoNoUser = loadApplication(projectsData.institution_id, projectsData._id, userInformation[0]._id)
+                    }
+                    setButtonQueroMeInscreverDisabled(encontrouOProjetoNoUser || (userInformation[0]?.role != 'volunteer'))
+                    setJaEstaInscrito(encontrouOProjetoNoUser)
+                }
+
+            } catch (error) {
+                setUserData({})
+                console.error('Failed to fetch data:', error);
+            }
+        };
+
         if (i) {
             fetchfoProjectInfo();
+            getUserInfo();
         }
     }, [i])
+
+    const handleQueroMeInscrever = () => {
+        if (!userData?.role) {
+            router.push(`/login_pages/login`)
+        }
+        else {
+            createAplication(projectsData.institution_id, projectsData._id, userData._id)
+            router.push('/login_pages/meinscrever') //trocar rota -> é um exemplo
+        }
+    };
 
     return (
         <>
@@ -53,14 +153,23 @@ export default function InfoProject() {
                     <div className="flex flex-col gap-3">
                         <h1 className="text-black text-xl font-medium max-h-30">Descrição da Atividade</h1>
                         <div className="text-base text-black text-justify overflow-y-auto max-h-64">{projectsData?.description}</div>
-                        
-                    </div>
-                    
-                    <div className="fixed bottom-28 flex w-full px-20  bg-white-background">
-                        <Link href={`../login_pages/meinscrever?i=${i}`} className=" flex justify-center bg-orange-primary text-white w-44 h-10 rounded-lg items-center hover:bg-blue-primary">Quero me inscrever!</Link>
-                    </div>
-                    
 
+                    </div>
+
+                    {
+                        jaEstaInscrito?
+                        <div>AAAAAAAAAAA</div>
+                        : ""
+                    }
+
+                    <div className="fixed bottom-28 flex w-full px-20  bg-white-background">
+                        <button disabled={buttonQueroMeInscreverDisabled} onClick={handleQueroMeInscrever}
+                            className={!buttonQueroMeInscreverDisabled ?
+                                "flex justify-center bg-orange-primary text-white w-44 h-10 rounded-lg items-center hover:bg-blue-primary"
+                                : "bg-gray-text cursor-not-allowed flex justify-center text-white w-44 h-10 rounded-lg items-center hover:bg-blue-primary"}>
+                            {jaEstaInscrito ? "Já está inscrito :)" : "Quero me inscrever!"}
+                        </button>
+                    </div>
                 </div>
 
                 <Footer />
