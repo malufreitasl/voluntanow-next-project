@@ -12,7 +12,7 @@ export default function Home() {
       <div>
         <NavBar />
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center pt-20">
         
         <p className="text-base mt-48">
             Não tens notificações disponíveis. 

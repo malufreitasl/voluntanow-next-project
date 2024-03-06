@@ -4,6 +4,7 @@ import { NavBar } from "../components/NavBar";
 import { useRouter } from "next/router";
 import { ProjectsList } from "../components/ProjectsList";
 import { Raleway } from "next/font/google";
+import Loading from "../components/Loading";
 
 
 
@@ -11,6 +12,7 @@ const raleway = Raleway({ subsets: ["latin"] });
 
 export default function InfoInstitution() {
     const [institutionData, setInstitutionData] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
     const { i } = router.query;
 
@@ -22,7 +24,9 @@ export default function InfoInstitution() {
                     throw new Error('Failed to fetch institutions data');
                 }
                 const data = await response.json();
-                setInstitutionData(data[0]);
+               
+                setInstitutionData(data);
+                setIsLoading(false);
             } catch (error) {
                 console.error('Failed to fetch institutions data:', error);
             }
@@ -33,6 +37,17 @@ export default function InfoInstitution() {
         }
     }, []);
 
+    if (isLoading) {
+        return (
+          <div>
+            <NavBar />
+            <Loading />
+            <Footer />
+          </div>
+        )
+      }
+    
+
     return (
         <>
             <div className={`${raleway.className}`}>
@@ -42,7 +57,7 @@ export default function InfoInstitution() {
                         <h1 className="text-2xl font-semibold text-black">{institutionData?.institution?.name}</h1>
                         <p className="text-orange-primary text-lg">{institutionData?.institution?.local}</p>
                         <div className="flex gap-4 pt-1">
-                            <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{`${institutionData?.total_applicants} ${institutionData?.total_applicants === 1 ? "inscrição em projetos" : "inscrições em projetos"}`}</p>
+                            <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{`${institutionData?.total_applicants > 0 ? institutionData?.total_applicants : 0} ${institutionData?.total_applicants === 1 ? "inscrição em projetos" : "inscrições em projetos"}`}</p>
                             <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">
                             {institutionData?.institution_avg_rating
                                 ? `Classificação: ${institutionData?.institution_avg_rating}/5`
@@ -55,7 +70,7 @@ export default function InfoInstitution() {
                         <p className="text-justify text-base text-black">{institutionData?.institution?.description}</p>
                     </div>
                     <div>
-                        <ProjectsList projects={institutionData.projects}/>
+                        <ProjectsList projects={institutionData?.projects}/>
                     </div>
                     <div className="flex flex-col gap-3">
                         <h2 className="text-xl">Contactos</h2>

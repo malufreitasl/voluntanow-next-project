@@ -5,7 +5,6 @@ export default async function handler(req, res) {
         if (req.method === "GET") {
             const { i } = req.query; 
             const allInstitutionInfo = await loadAllInstitutionDataById(i);
-
             return res.status(200).json(allInstitutionInfo);
         } else {
             return res.status(405).json({ message: "Method not allowed" });

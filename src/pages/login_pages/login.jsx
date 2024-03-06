@@ -2,9 +2,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { Footer } from "../components/Footer";
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
+import { isUserLoggedIn } from "../utils/globalFunctions";
 
 export default function LogIn() {
-    const [ userInfo, setUserInfo ] = useState({});
+    const router = useRouter();
+    const isLoggedIn = isUserLoggedIn();
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            router.push('/login_pages/profile');
+        }
+    }, [isLoggedIn]);
+
+    const [userInfo, setUserInfo] = useState({});
 
     const fetchLogin = async () => {
         try {
@@ -21,6 +32,7 @@ export default function LogIn() {
             }
             const body = await response.json();
             localStorage.setItem("token", body.token);
+            router.push('/login_pages/profile');
         } catch (error) {
             console.error('Failed to fetch data:', error);
         }
@@ -33,8 +45,8 @@ export default function LogIn() {
             ...prevState,
             [name]: value
         }));
-        console.log(userInfo)
     };
+
     return (
         <>
             <div className="mx-6">
@@ -48,7 +60,7 @@ export default function LogIn() {
                     <p className="text-sm mt-2">Palavra Passe</p>
                     <input type="password" name="password" id="password" className=" h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" onChange={ handleInputChange }/>
                     <button onClick={ fetchLogin } className="mt-8 h-12 bg-orange-primary text-white shadow-inner rounded-lg">
-                        <Link href="/login_pages/profile">Login</Link>
+                        Login
                     </button>
                     <button className="mt-2 h-12 bg-cartsFilter rounded-lg"><Link href="/login_pages/filtrartipo">Criar conta</Link></button>
                 </div>
@@ -56,6 +68,5 @@ export default function LogIn() {
             </div>
             <Footer/>
         </>
-
     )
 }
