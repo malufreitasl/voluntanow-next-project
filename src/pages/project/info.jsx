@@ -4,6 +4,7 @@ import { Raleway } from "next/font/google";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import MyComponent from "../components/icons/icons";
 
 
 
@@ -37,7 +38,7 @@ export default function InfoProject() {
         <>
             <div className={`${raleway.className}`}>
                 <NavBar />
-
+                
                 <div className="flex flex-col gap-6 px-6 pt-64">
                     <div className="flex flex-col gap-2">
                         <div className="text-2xl font-semibold text-black">{projectsData?.name}</div>

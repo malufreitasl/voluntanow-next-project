@@ -50,7 +50,7 @@ export default function LogIn() {
                     <button onClick={ fetchLogin } className="mt-8 h-12 bg-orange-primary text-white shadow-inner rounded-lg">
                         <Link href="/login_pages/profile">Login</Link>
                     </button>
-                    <button className="mt-2 h-12 bg-cartsFilter rounded-lg"><Link href="/login_pages/criarconta/passo1">Criar conta</Link></button>
+                    <button className="mt-2 h-12 bg-cartsFilter rounded-lg"><Link href="/login_pages/filtrartipo">Criar conta</Link></button>
                 </div>
                 
             </div>

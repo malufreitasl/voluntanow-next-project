@@ -8,6 +8,9 @@ function Notification() {
     )
 }
 
+
+  
+
 function MenuIcon({ onClick }) {
     return (
         <svg onClick={onClick} width="24" height="13" viewBox="0 0 24 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,4 +76,4 @@ function UserIcon() {
     )
 }
 
-module.exports = { Notification, MenuIcon, FilterIcon, SearchIcon, HomeIcon, NoteIcon, UserIcon, HandsIcon }
+module.exports = { Notification, MenuIcon, FilterIcon, SearchIcon, HomeIcon, NoteIcon, UserIcon, HandsIcon}

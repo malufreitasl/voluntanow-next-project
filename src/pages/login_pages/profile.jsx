@@ -3,7 +3,8 @@ import { Footer } from "../components/Footer";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export default function Home() {
+export default function Profile() {
+
   const [userInfo, setUserInfo] = useState([]);
 
   useEffect(() => {
@@ -30,9 +31,6 @@ export default function Home() {
 
     getUserInfo();
   }, []); 
-}
-
-export default function Profile() {
   return (
     <div className={"bg-white-background h-screen w-screen"}>
       <div>
