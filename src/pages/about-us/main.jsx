@@ -9,7 +9,7 @@ export default function AboutUs(){
         <>
         <NavBar/>
         <div className='pt-64 pb-24 px-6 w-full'>
-            <h1 className="text-black text-2xl font-semibold">Sobre Nós</h1>
+            <h1 className="text-black text-2xl font-semibold mb-8">Sobre Nós</h1>
             <div className="flex flex-col items-center text-justify">
                 <Image src="/images/logo.png" width="280" height="280" />
                 <p>O voluntariado é a melhor recompensa.</p>
