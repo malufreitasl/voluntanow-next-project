@@ -70,8 +70,8 @@ export default function Profile() {
       </div>
       {userInfo?.length !== 0 ? (
         userInfo?.role === "volunteer" ? (
-          <div className="flex flex-col items-center h-full justify-center mt-64 pb-24">
-            <Image src="/images/perfil.jpg" width="180" height="180" className="rounded-full" />
+          <div className="flex flex-col items-center h-full justify-center mt-56 pb-24">
+            <Image src={userInfo?.volunteer_info?.image?? "/images/perfil.png"} width="180" height="180" className="rounded-full" alt='profile'/>
 
             <p className=" mt-6 text-2xl font-semibold text-black">
               {userInfo?.volunteer_info?.name}
