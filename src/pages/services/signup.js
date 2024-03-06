@@ -26,7 +26,7 @@ async function createUser(userInfo) {
     if (userInfo.role === "volunteer") {
         userInfo = await insertVolunteer(userInfo);
     } else if (userInfo.role === "institution") {
-        userInfo = await insertInstitution(email);
+        userInfo = await insertInstitution(userInfo);
     }
     return userInfo;
 }

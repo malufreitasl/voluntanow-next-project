@@ -40,7 +40,7 @@ export default function MeInscrever() {
                     <div className="flex gap-4 pt-1">
                         <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{projectsData?.date}</p>
                         {projectsData?.applicants >= 1 ?
-                            <p class="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{projectsData.applicants === 1 ? projectsData.applicants + " pessoa já inscrita" : projectsData.applicants + " pessoas já inscritas"}</p>
+                            <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{projectsData.applicants === 1 ? projectsData.applicants + " pessoa já inscrita" : projectsData.applicants + " pessoas já inscritas"}</p>
                             : ""
                         }
                     </div>

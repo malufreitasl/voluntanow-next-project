@@ -8,6 +8,7 @@ import { isUserLoggedIn } from "../utils/globalFunctions";
 export default function LogIn() {
     const router = useRouter();
     const isLoggedIn = isUserLoggedIn();
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -28,13 +29,15 @@ export default function LogIn() {
                 body: JSON.stringify(userInfo),
             });
             if (!response.ok) {
-                throw new Error('Failed to fetch data');
+                setErrorMessage("Dados inválidos. Tente novamente");
+                return;
             }
             const body = await response.json();
             localStorage.setItem("token", body.token);
             router.push('/login_pages/profile');
         } catch (error) {
             console.error('Failed to fetch data:', error);
+            setErrorMessage('Failed to fetch data');
         }
     };
 
@@ -59,10 +62,17 @@ export default function LogIn() {
                     <input type="text" name="username" id="username" className="h-12 px-4 bg-gray-terciary shadow-inner rounded-lg" onChange={ handleInputChange }/>
                     <p className="text-sm mt-2">Palavra Passe</p>
                     <input type="password" name="password" id="password" className=" h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" onChange={ handleInputChange }/>
+                    {errorMessage && (
+                        <div>
+                            <p className="text-gray-text pt-4 text-center">{errorMessage}</p>
+                        </div>
+                    )}
                     <button onClick={ fetchLogin } className="mt-8 h-12 bg-orange-primary text-white shadow-inner rounded-lg">
                         Login
                     </button>
-                    <button className="mt-2 h-12 bg-cartsFilter rounded-lg"><Link href="/login_pages/filtrartipo">Criar conta</Link></button>
+                    <Link href="/login_pages/filter-type">
+                        <button className="mt-2 h-12 w-full bg-cartsFilter rounded-lg">Criar conta</button>
+                    </Link>
                 </div>
                 
             </div>

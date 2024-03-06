@@ -7,12 +7,14 @@ export function ProjectsList({ projects }){
     const currentDate = moment();
     const recentProjects = projects?.filter(project => moment(project?.date, "DD-MM-YYYY").isAfter(currentDate));
     const finishedProjects = projects?.filter(project => moment(project?.date, "DD-MM-YYYY").isBefore(currentDate));
+    console.log(projects)
 
     return (
         <div className='flex flex-col gap-5'>
             <div className="flex flex-col gap-3">
                 <h2 className="font-medium text-xl text-black ">Ações anunciadas</h2>
-                {recentProjects?.map((project, index) => (
+                {recentProjects?.length > 0? 
+                (recentProjects?.map((project, index) => (
                     <motion.div
                     initial={{
                         y: 100,
@@ -40,10 +42,9 @@ export function ProjectsList({ projects }){
                             </div>
                         </Link>
                     </motion.div>
-                ))}
-                {
-                  recentProjects?.length > 0 ? "" : "Não há ações publicadas."
-                }
+                ))): (
+                    <p>Não há ações publicadas</p>
+                )}
             </div>
             {finishedProjects?.length > 0 && (
                 <ConcludedProjectsList finishedProjects={finishedProjects}/>
