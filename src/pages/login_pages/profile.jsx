@@ -9,7 +9,9 @@ import Loading from '../components/Loading';
 import { VolunteerProjects } from "../components/VolunteerProjects";
 
 export default function Profile() {
+
   const router = useRouter();
+
   const [userInfo, setUserInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -38,6 +40,7 @@ export default function Profile() {
     };
 
     getUserInfo();
+
   }, []);
 
   const handleLogout = () => {
