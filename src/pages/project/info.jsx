@@ -4,6 +4,7 @@ import { Raleway } from "next/font/google";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Loading from "../components/Loading";
 
 
 
@@ -11,6 +12,7 @@ const raleway = Raleway({ subsets: ["latin"] });
 
 export default function InfoProject() {
     const [projectsData, setProjectsData] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
     const { i } = router.query;
 
@@ -23,6 +25,7 @@ export default function InfoProject() {
                 }
                 const project = await response.json();
                 setProjectsData(project);
+                setIsLoading(false);
             } catch (error) {
                 console.error('Failed to fetch project data:', error);
             }
@@ -32,6 +35,17 @@ export default function InfoProject() {
             fetchfoProjectInfo();
         }
     }, [i])
+
+    if (isLoading) {
+        return (
+          <div>
+            <NavBar />
+            <Loading />
+            <Footer />
+          </div>
+        )
+      }
+    
 
     return (
         <>
