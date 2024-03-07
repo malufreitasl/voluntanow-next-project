@@ -1,13 +1,14 @@
 const { ObjectId } = require('mongodb');
-const { getMongoCollection } = require('./mongodb')
+const { getMongoCollection } = require('./mongodb');
+const { object } = require('yup');
 const collectionName = "application"
 
 async function insertApplication(institution_id, project_id, volunteer_id) {
   const collection = await getMongoCollection(collectionName)
   const result = await collection.insertOne({
-    institution_id,
-    project_id,
-    volunteer_id
+    institution_id: new ObjectId(institution_id),
+    project_id: new ObjectId(project_id),
+    volunteer_id: new ObjectId(volunteer_id)
   })
   return result.acknowledged;
 }

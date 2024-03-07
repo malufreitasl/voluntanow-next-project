@@ -59,7 +59,7 @@ export default function LogIn() {
                     <Image src="/images/logo.png" width="280" height="280" />
                 </div>
                 
-                <div className="flex flex-col mx-6 pt-4">
+                <div className="flex flex-col mx-6 pt-4 pb-36">
                     <p className="text-sm">Nome de usuário</p>
                     <input type="text" name="username" id="username" className="h-12 px-4 bg-gray-terciary shadow-inner rounded-lg" onChange={ handleInputChange }/>
                     <p className="text-sm mt-2">Palavra Passe</p>
@@ -78,7 +78,6 @@ export default function LogIn() {
                 </div>
                 
             </div>
-            <Footer/>
         </>
     )
 }

@@ -76,7 +76,7 @@ export default function Profile() {
       </div>
       {userInfo?.length !== 0 ? (
         userInfo?.role === "volunteer" ? (
-          <div className="flex flex-col items-center justify-center pt-64 pb-24">
+          <div className="flex flex-col items-center justify-center pt-64 pb-32">
              <div className="self-start px-6 pb-2"><GoBackButton/></div>
             <Image src={userInfo?.volunteer_info?.image?? "/images/perfil.png"} width="180" height="180" className="rounded-full" alt='profile'/>
 
@@ -98,7 +98,7 @@ export default function Profile() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col gap-6 pt-80 pb-32">
+          <div className="flex flex-col gap-6 pt-80 pb-32 mx-8">
           <div className="flex flex-col gap-2">
               <div className="flex justify-center items-center w-full pb-4">
                   {userInfo?.institution_info?.name === "Associação Salvador"? (
