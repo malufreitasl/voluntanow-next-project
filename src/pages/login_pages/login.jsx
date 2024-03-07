@@ -4,6 +4,7 @@ import { Footer } from "../components/Footer";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { isUserLoggedIn } from "../utils/globalFunctions";
+import GoBackButton from "../components/GoBackButton";
 
 export default function LogIn() {
     const router = useRouter();
@@ -53,7 +54,8 @@ export default function LogIn() {
     return (
         <>
             <div className="mx-6">
-                <div className="mt-28 flex align-center justify-center">
+                <div className="mt-16 flex flex-col items-center justify-center gap-2">
+                    <div className="mx-6 self-start"><GoBackButton/></div>
                     <Image src="/images/logo.png" width="280" height="280" />
                 </div>
                 

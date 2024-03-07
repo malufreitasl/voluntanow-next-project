@@ -4,6 +4,7 @@ import { Footer } from "../../components/Footer";
 import PasswordMatch from "../confirmacaopass";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import GoBackButton from "@/pages/components/GoBackButton";
 
 export default function CreateVolunteerAccount() {
     const [credentials, setCredentials] = useState({ role: "volunteer" });
@@ -73,14 +74,17 @@ export default function CreateVolunteerAccount() {
 
     return (
         <>
-            <div className="bg-gray-50">
-                <div className="pt-10 flex fixed w-full bg-gray-terciary align-center justify-center">
-                    <Image src="/images/logo.png" width="280" height="280" />
+            <div className="bg-white-background">
+                <div className="pt-10 flex flex-col fixed w-full items-center bg-gray-terciary align-center justify-center">
+                    <div className="self-start mx-6">
+                        <GoBackButton />
+                    </div>
+                    <Image src="/images/logo.png" width="280" height="280" className="bg-white-background"/>
                 </div>
 
-                <div className="pt-96 bg-gray-50 px-8">
-                    <form className="flex flex-col bg-gray-50">
-                        <h1 className="text-2xl pt-2 text-center">Criar Conta de Voluntário</h1>
+                <div className="bg-gray-50 pt-80 px-8 pb-32">
+                <form className="flex flex-col bg-gray-50 pt-10">
+                        <h1 className="text-2xl pb-10 text-center">Criar Conta de Voluntário</h1>
                         <p className="text-sm pt-6">Username</p>
                         <input onChange={handleInputChange} type="text" name="username" id="username" className="h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required disabled={inputDisabled}/>
                         { !credentials.username && (
@@ -130,7 +134,7 @@ export default function CreateVolunteerAccount() {
                             </div>
                             <div className="flex justify-center mt-16">
                                 <Link href="/login_pages/login">
-                                    <button type="submit" onClick={createUserAccount} className="mb-32 h-12 text-white bg-orange-primary rounded-lg px-4">Criar conta!</button>
+                                    <button type="submit" onClick={createUserAccount} className="h-12 text-white bg-orange-primary rounded-lg px-4">Criar conta!</button>
                                 </Link>
                             </div>
                         </div>

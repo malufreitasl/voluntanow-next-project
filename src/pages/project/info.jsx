@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Loading from "../components/Loading";
+import GoBackButton from "../components/GoBackButton";
 
 
 
@@ -51,8 +52,8 @@ export default function InfoProject() {
         <>
             <div className={`${raleway.className}`}>
                 <NavBar />
-
-                <div className="flex fixed flex-col gap-6 px-6 pt-64 pb-28">
+                <div className="pt-64 px-6 pb-2"><GoBackButton/></div>
+                <div className="flex flex-col gap-6 px-6 pb-32">
                     <div className="flex flex-col gap-2">
                         <div className="text-2xl font-semibold text-black">{projectsData?.name}</div>
                         <div className="text-xl text-orange-primary">{projectsData?.institution_name}</div>
