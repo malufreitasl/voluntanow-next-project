@@ -211,4 +211,10 @@ async function insertInstitution(institutionInfo){
     return result
 }
 
-module.exports = { findAllInstitutions, findInstitutionInfo, findAllInstitutionsForSearch, findInstitutionInfoByEmail, insertInstitution, loadInstitutionById };
+async function findInstitutionId(username){
+  const collection = await getMongoCollection(collectionName)
+  const result = await collection.findOne({username: username})
+  return result._id
+}
+
+module.exports = { findAllInstitutions, findInstitutionInfo, findAllInstitutionsForSearch, findInstitutionInfoByEmail, insertInstitution, loadInstitutionById, findInstitutionId };

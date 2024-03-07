@@ -1,4 +1,3 @@
-import { loadAllInstitutionInfo } from "@/pages/services/application";
 import {loadInstitutions }from "@/pages/services/institution"
 
 export default async function handler(req, res) {
