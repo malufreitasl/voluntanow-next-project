@@ -9,6 +9,8 @@ async function login(username, password) {
 
 async function generateToken(accountInfo) {
     const token = encryptToken(accountInfo.username + ":" + accountInfo.role);
+    console.log(accountInfo.username)
+    console.log(token)
     return token;
 }
 

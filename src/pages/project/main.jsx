@@ -63,12 +63,12 @@ export default function ProjectPage() {
                         >
                             <Link href={`/project/info?i=${elemento._id}`}>
                                 <div className="border-b border-gray-text pb-2">
-                                    <div class="text-blue-primary text-base font-medium">{elemento.name}</div>
-                                    <div class="text-orange-primary text-sm">{elemento.institution_name}</div>
-                                    <div class="flex gap-2.5">
-                                        <div class="text-gray-text text-sm">{elemento.date}</div>
+                                    <div className="text-blue-primary text-base font-medium">{elemento.name}</div>
+                                    <div className="text-orange-primary text-sm">{elemento.institution_name}</div>
+                                    <div className="flex gap-2.5">
+                                        <div className="text-gray-text text-sm">{elemento.date}</div>
                                         {elemento.applicants >= 1 ?
-                                            <div class="text-gray-text text-sm">{elemento.applicants === 1 ? elemento.applicants + " pessoa já inscrita" : elemento.applicants + " pessoas já inscritas"} </div>
+                                            <div className="text-gray-text text-sm">{elemento.applicants === 1 ? elemento.applicants + " pessoa já inscrita" : elemento.applicants + " pessoas já inscritas"} </div>
                                             : ""
                                         }
 

@@ -23,7 +23,8 @@ async function findAllInstitutionsForSearch()
 
 async function findInstitutionInfo(username) {
     const collection = await getMongoCollection(collectionName);
-    const institutionInfo = await collection.aggregate([
+    const institutionInfo = await collection.aggregate(
+      [
         {
           $match: {
             username: username
@@ -78,8 +79,8 @@ async function findInstitutionInfo(username) {
               project_id: "$projects._id"
             },
             institution_info: { $first: "$institution_info" },
-            project_info: { $first: "$projects" },
-            total_applicants: { $sum: 1 }
+            project: { $first: "$projects" },
+            applicants: { $sum: 1 }
           }
         },
         {
@@ -88,20 +89,22 @@ async function findInstitutionInfo(username) {
             institution_info: { $first: "$institution_info" },
             projects: {
               $push: {
-                project_info: "$project_info",
-                total_applicants: "$total_applicants"
+                $mergeObjects: [
+                  "$project",
+                  { applicants: "$applicants" }
+                ]
               }
             },
-            total_applicants: { $sum: "$total_applicants" } 
+            applicants: { $sum: "$applicants" } 
           }
         },
         {
           $project: {
-            total_applicants: 1,
+            applicants: 1,
             institution_info: 1,
             projects: 1
           }
-        }
+        }      
       ]).toArray();
 
       return institutionInfo;

@@ -7,9 +7,12 @@ import Link from "next/link";
 import { removeToken } from "../utils/globalFunctions";
 import Loading from '../components/Loading';
 import { VolunteerProjects } from "../components/VolunteerProjects";
+import { ProjectsList } from '../components/ProjectsList';
 
 export default function Profile() {
+
   const router = useRouter();
+
   const [userInfo, setUserInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -38,6 +41,7 @@ export default function Profile() {
     };
 
     getUserInfo();
+
   }, []);
 
   const handleLogout = () => {
@@ -46,6 +50,7 @@ export default function Profile() {
 
   const confirmLogout = () => {
     removeToken();
+    setUserInfo([]);
     router.push('/login_pages/login');
   };
 
@@ -70,8 +75,8 @@ export default function Profile() {
       </div>
       {userInfo?.length !== 0 ? (
         userInfo?.role === "volunteer" ? (
-          <div className="flex flex-col items-center h-full justify-center mt-64 pb-24">
-            <Image src="/images/perfil.jpg" width="180" height="180" className="rounded-full" />
+          <div className="flex flex-col items-center h-full justify-center mt-56 pb-24">
+            <Image src={userInfo?.volunteer_info?.image?? "/images/perfil.png"} width="180" height="180" className="rounded-full" alt='profile'/>
 
             <p className=" mt-6 text-2xl font-semibold text-black">
               {userInfo?.volunteer_info?.name}
@@ -91,7 +96,49 @@ export default function Profile() {
             </div>
           </div>
         ) : (
-          <div>Profile de organizações</div>
+          <div className="flex flex-col gap-6 px-6 pt-80 pb-32">
+          <div className="flex flex-col gap-2">
+              <div className="flex justify-center items-center w-full pb-4">
+                  {userInfo?.institution_info?.name === "Associação Salvador"? (
+                      <img src="/images/assalv_logo.svg" width="320" height="320" className="rounded-full" alt='profile'/>
+                  ) : (
+                      <img src="/images/perfil.png" width="180" height="180" className="rounded-full" alt='profile'/>
+                  )}
+              </div>
+              
+              <h1 className="text-2xl font-semibold text-black text-center">{userInfo?.institution_info?.name}</h1>
+              <p className="text-center">{userInfo?.institution_info?.username}</p>
+              <p className="text-orange-primary text-center">{userInfo?.institution_info?.local}</p>
+              
+              <div className="flex pt-1 justify-center pb-4 gap-2">
+                  <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white text-center">{userInfo?.applicants} inscrições em projetos</p>
+                  <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white  text-center">Classificação: 4.5/5</p>
+              </div>
+
+              <div className="flex justify-center pb-6">
+                  <button onClick={handleLogout} className="bg-orange-primary text-white w-44 h-10 rounded-lg items-center justify-center self-center">Terminar sessão</button>
+              </div>
+          </div>
+
+          <div className="flex flex-col gap-3">
+              <h2 className="text-xl font-medium text-black">Descrição da Organização</h2>
+              <p className="text-justify text-base text-black">{userInfo?.institution_info?.description}</p>
+          </div>
+
+          <div>
+              <ProjectsList projects={userInfo?.projects}/>
+          </div>
+          
+          <div className="flex flex-col gap-3">
+              <h2 className="text-xl">Contactos</h2>
+              <div className="flex flex-col gap-0.5">
+                  <p>{userInfo?.institution_info?.email}</p>
+                  <p>{userInfo?.institution_info?.phone}</p>
+                  <p>{userInfo?.institution_info?.website_link}</p>
+              </div>
+          </div>
+      </div>
+          
         )
       ) : (
         <div className="h-screen flex flex-col justify-center items-center gap-10">

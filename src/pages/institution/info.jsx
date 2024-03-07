@@ -4,6 +4,7 @@ import { NavBar } from "../components/NavBar";
 import { useRouter } from "next/router";
 import { ProjectsList } from "../components/ProjectsList";
 import { Raleway } from "next/font/google";
+import Loading from "../components/Loading";
 
 
 
@@ -11,6 +12,7 @@ const raleway = Raleway({ subsets: ["latin"] });
 
 export default function InfoInstitution() {
     const [institutionData, setInstitutionData] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
     const { i } = router.query;
 
@@ -24,6 +26,7 @@ export default function InfoInstitution() {
                 const data = await response.json();
                
                 setInstitutionData(data);
+                setIsLoading(false);
             } catch (error) {
                 console.error('Failed to fetch institutions data:', error);
             }
@@ -33,6 +36,17 @@ export default function InfoInstitution() {
             fetchInstitutionInfo();
         }
     }, []);
+
+    if (isLoading) {
+        return (
+          <div>
+            <NavBar />
+            <Loading />
+            <Footer />
+          </div>
+        )
+      }
+    
 
     return (
         <>

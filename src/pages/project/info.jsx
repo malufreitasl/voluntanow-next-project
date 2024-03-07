@@ -3,6 +3,9 @@ import { Footer } from "../components/Footer"
 import { Raleway } from "next/font/google";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import Loading from "../components/Loading";
+
 
 
 const raleway = Raleway({ subsets: ["latin"] });
@@ -12,6 +15,7 @@ export default function InfoProject() {
     const [userData, setUserData] = useState({});
     const [buttonQueroMeInscreverDisabled, setButtonQueroMeInscreverDisabled] = useState(false)
     const [jaEstaInscrito, setJaEstaInscrito] = useState(false)
+    const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
     const { i } = router.query;
 
@@ -39,35 +43,6 @@ export default function InfoProject() {
         }
     };
 
-    const loadApplication = async (institution_id, project_id, volunteer_id) => {
-        try {
-            const response = await fetch(`../api/load-application`,
-                {
-                    method: "POST",
-                    headers: {
-                        'Accept': 'application/json',
-                        "Content-Type": "application/json",
-                        "Authorization": localStorage.getItem("token")
-                    },
-                    body: JSON.stringify({
-                        'institution_id': institution_id,
-                        'project_id': project_id,
-                        'volunteer_id': volunteer_id
-                    })
-                });
-            if (!response.ok) {
-                throw new Error('Failed to load application');
-            }
-            console.log(response)
-            return await response.json();
-        } catch (error) {
-            console.error('Failed to load application:', error);
-        }
-    };
-
-
-
-
     useEffect(() => {
         const fetchfoProjectInfo = async () => {
             try {
@@ -77,8 +52,47 @@ export default function InfoProject() {
                 }
                 const project = await response.json();
                 setProjectsData(project);
+                setIsLoading(false);
             } catch (error) {
                 console.error('Failed to fetch project data:', error);
+            }
+        };
+
+        const verifyAndLoadApplication = async (institution_id, project_id, volunteer_id) => {
+            try {
+                console.log("qqqqqqqqqqqqqqqqqqqqq")
+                console.log(projectsData.institution_id)
+                console.log( projectsData._id)
+                console.log( userData._id)
+
+                const response = await fetch(`../api/application/load-application`,
+                    {
+                        method: "POST",
+                        headers: {
+                            'Accept': 'application/json',
+                            "Content-Type": "application/json",
+                            "Authorization": localStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            'institution_id': institution_id,
+                            'project_id': project_id,
+                            'volunteer_id': volunteer_id
+                        })
+                    });
+                if (!response.ok) {
+                    throw new Error('Failed to load application');
+                }
+                console.log(response)
+                let application = await response.json();
+
+                if(application != undefined)
+                {
+                    setJaEstaInscrito(true)
+                    setButtonQueroMeInscreverDisabled(true)
+                }
+
+            } catch (error) {
+                console.error('Failed to load application:', error);
             }
         };
 
@@ -101,14 +115,18 @@ export default function InfoProject() {
                     setUserData({})
                 } else {
                     setUserData(userInformation[0]);
+
                     //TODO verificar este /api/user porque nao tras os projetos todos em que o user esta inscrito
                     let encontrouOProjetoNoUser = userInformation[0].projects.find(x => x._id == i)
-                    //verifica novamente por outra api a ver se nao existe a application
-                    if(!encontrouOProjetoNoUser){
-                        encontrouOProjetoNoUser = loadApplication(projectsData.institution_id, projectsData._id, userInformation[0]._id)
+
+                    if (!buttonQueroMeInscreverDisabled) {
+                        setButtonQueroMeInscreverDisabled(userInformation[0]?.role != 'volunteer')
                     }
-                    setButtonQueroMeInscreverDisabled(encontrouOProjetoNoUser || (userInformation[0]?.role != 'volunteer'))
-                    setJaEstaInscrito(encontrouOProjetoNoUser)
+
+                    if (!jaEstaInscrito) {
+                        setJaEstaInscrito(encontrouOProjetoNoUser != undefined)
+                    }
+
                 }
 
             } catch (error) {
@@ -120,6 +138,7 @@ export default function InfoProject() {
         if (i) {
             fetchfoProjectInfo();
             getUserInfo();
+            verifyAndLoadApplication(projectsData.institution_id, projectsData._id, userData._id);
         }
     }, [i])
 
@@ -132,6 +151,16 @@ export default function InfoProject() {
             router.push('/login_pages/meinscrever') //trocar rota -> é um exemplo
         }
     };
+    if (isLoading) {
+        return (
+            <div>
+                <NavBar />
+                <Loading />
+                <Footer />
+            </div>
+        )
+    }
+
 
     return (
         <>
@@ -145,7 +174,7 @@ export default function InfoProject() {
                         <div className="flex gap-4 pt-1">
                             <div className=" text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{projectsData?.date}</div>
                             {projectsData?.applicants >= 1 ?
-                                <div class="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{projectsData.applicants === 1 ? projectsData.applicants + " pessoa já inscrita" : projectsData.applicants + " pessoas já inscritas"} </div>
+                                <div className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{projectsData.applicants === 1 ? projectsData.applicants + " pessoa já inscrita" : projectsData.applicants + " pessoas já inscritas"} </div>
                                 : ""
                             }
                         </div>
@@ -155,11 +184,11 @@ export default function InfoProject() {
                         <div className="text-base text-black text-justify overflow-y-auto max-h-64">{projectsData?.description}</div>
 
                     </div>
-
+                    
                     {
-                        jaEstaInscrito?
-                        <div>AAAAAAAAAAA</div>
-                        : ""
+                        jaEstaInscrito ?
+                            <div>AAAAAAAAAAA</div>
+                            : ""
                     }
 
                     <div className="fixed bottom-28 flex w-full px-20  bg-white-background">

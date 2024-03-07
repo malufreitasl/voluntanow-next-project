@@ -14,7 +14,8 @@ module.exports = {
       "white-background": "#FAFAFA",
       "black": "#000000",
       "white": "#FFFFFF",
-      "cartsFilter": "#EDE9E9"
+      "cartsFilter": "#EDE9E9",
+      "red-warning": "#AE0F0F"
     },
     extend: {
       backgroundImage: {

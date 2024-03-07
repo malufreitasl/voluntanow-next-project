@@ -13,12 +13,12 @@ export default async function handler(req, res) {
                     });
                 } return res.status(400).json({
                     message: "Invalid Data",
-                    error: "Email already registered"
+                    error: "Email já está registado"
                 });
             }
             return res.status(400).json({
                 message: "Invalid Data",
-                error: "Username already registered"
+                error: "Username Indisponível"
             });
         } return res.status(400).json({
             message: "Invalid Data.",

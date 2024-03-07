@@ -11,9 +11,9 @@ export default function FiltrarTipo() {
                     <Image src="/images/logo.png" width="280" height="280" />
                 </div>
                 
-                <div className="flex flex-col mx-8 pt-4">
-                    <button className="mt-8 w-80 h-20 bg-blue-primary text-white text-lg shadow-inner rounded-lg"><Link href="./criarconta_organizacao/passo1org">Organização 🏨</Link></button>
-                    <button className="mt-5 w-80 h-20 bg-orange-primary text-white text-lg rounded-lg"><Link href="./criarconta/passo1">Voluntário🧑🏿‍🤝‍🧑🏼</Link></button>
+                <div className="flex flex-col mx-8 pt-4 items-center">
+                    <button className="mt-8 w-80 h-16 bg-cartsFilter text-lg rounded-lg"><Link href="/login_pages/create-account/institution">Organização 🏨</Link></button>
+                    <button className="mt-5 w-80 h-16 bg-cartsFilter text-lg rounded-lg"><Link href="/login_pages/create-account/volunteer">Voluntário 🧑🏿‍🤝‍🧑🏼</Link></button>
                 </div>
                 
             </div>

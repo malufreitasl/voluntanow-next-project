@@ -1,12 +1,3 @@
-/* username
-   password
-   "name"
-   "description"
-   "website_link"
-   "email"
-   "phone"
-   "local"*/
-
 import { createUser } from "@/pages/services/signup";
 
 

@@ -70,7 +70,8 @@ async function findVolunteerInfo(username) {
                 gender: "$gender",
                 job: "$job",
                 email: "$email",
-                phone: "$phone"
+                phone: "$phone",
+                image: "$image"
               },
             },
             projects: { $addToSet: "$projects" },
@@ -101,7 +102,8 @@ async function findVolunteerInfo(username) {
                   gender: "$volunteer_info.gender",
                   job: "$volunteer_info.job",
                   email: "$volunteer_info.email",
-                  phone: "$volunteer_info.phone"
+                  phone: "$volunteer_info.phone",
+                  image: "$volunteer_info.image"
                 },
                 "$volunteer_info",
               ],
@@ -207,7 +209,8 @@ async function findVolunteerInfoByEmail(email) {
                 gender: "$gender",
                 job: "$job",
                 email: "$email",
-                phone: "$phone"
+                phone: "$phone",
+                image: "$image"
               },
             },
             projects: { $addToSet: "$projects" },
@@ -238,7 +241,8 @@ async function findVolunteerInfoByEmail(email) {
                   gender: "$volunteer_info.gender",
                   job: "$volunteer_info.job",
                   email: "$volunteer_info.email",
-                  phone: "$volunteer_info.phone"
+                  phone: "$volunteer_info.phone",
+                  image: "$volunteer_info.image"
                 },
                 "$volunteer_info",
               ],
