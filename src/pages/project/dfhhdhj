@@ -1,112 +1,171 @@
-import { NavBar } from "../components/NavBar"
-import { Footer } from "../components/Footer"
-import { Raleway } from "next/font/google";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
+import { NavBar } from "../components/NavBar";
+import { Footer } from "../components/Footer";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import Loading from "../components/Loading";
-import { isUserLoggedIn } from "../utils/globalFunctions";
+import { removeToken } from "../utils/globalFunctions";
+import Loading from '../components/Loading';
+import { VolunteerProjects } from "../components/VolunteerProjects";
+import { ProjectsList } from '../components/ProjectsList';
+import GoBackButton from '../components/GoBackButton';
 
-const raleway = Raleway({ subsets: ["latin"] });
+export default function Profile() {
 
-export default function InfoProject() {
-    const [projectsData, setProjectsData] = useState({});
-    const [isLoading, setIsLoading] = useState(true);
-    const [showConfirmation, setShowConfirmation] = useState(false);
-    const router = useRouter();
-    const { i } = router.query;
+  const router = useRouter();
 
-    useEffect(() => {
-        const fetchProjectInfo = async () => {
-            try {
-                const response = await fetch(`../api/project/info?i=${i}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch project data');
-                }
-                const project = await response.json();
-                setProjectsData(project);
-                setIsLoading(false);
-            } catch (error) {
-                console.error('Failed to fetch project data:', error);
-            }
-        };
+  const [userInfo, setUserInfo] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
-        if (i) {
-            fetchProjectInfo();
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const response = await fetch("/api/user", {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            "Content-Type": "application/json",
+            "Authorization": localStorage.getItem("token")
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
         }
-    }, [i]);
-
-    const handleInscription = () => {
-        if (isUserLoggedIn()) { // Verifica se o usuário está logado
-            setShowConfirmation(true);
-        } else {
-            router.push('/login_pages/meinscrever?i=${i}');
-        }
+        const userInformation = await response.json();
+        setUserInfo(userInformation[0]);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.error('Failed to fetch data:', error);
+      }
     };
 
-    const confirmInscription = () => {
-        // Lógica para confirmar a inscrição
-        // Aqui você pode adicionar a lógica para inscrever o usuário na ação de voluntariado
-        setShowConfirmation(false);
-    };
+    getUserInfo();
 
-    const cancelInscription = () => {
-        setShowConfirmation(false);
-    };
+  }, []);
 
-    if (isLoading) {
-        return (
-          <div>
-            <NavBar />
-            <Loading />
-            <Footer />
-          </div>
-        )
-    }
-    
+  const handleLogout = () => {
+    setShowConfirmation(true);
+  };
+
+  const confirmLogout = () => {
+    removeToken();
+    setUserInfo([]);
+    router.push('/login_pages/login');
+  };
+
+  const cancelLogout = () => {
+    setShowConfirmation(false);
+  };
+
+  if (isLoading) {
     return (
-        <>
-            <div className={`${raleway.className}`}>
-                <NavBar />
-                <div className="flex fixed flex-col gap-6 px-6 pt-64 pb-28">
-                    <div className="flex flex-col gap-2">
-                        <div className="text-2xl font-semibold text-black">{projectsData?.name}</div>
-                        <div className="text-xl text-orange-primary">{projectsData?.institution_name}</div>
-                        <div className="flex gap-4 pt-1">
-                            <div className=" text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{projectsData?.date}</div>
-                            {projectsData?.applicants >= 1 ?
-                                <div class="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{projectsData.applicants === 1 ? projectsData.applicants + " pessoa já inscrita" : projectsData.applicants + " pessoas já inscritas"} </div>
-                                : ""
-                            }
-                        </div>
-                    </div>
+      <div>
+        <NavBar />
+        <Loading />
+        <Footer />
+      </div>
+    )
+  }
 
-                    <div className="flex flex-col gap-3">
-                        <h1 className="text-black text-xl font-medium max-h-30">Descrição da Atividade</h1>
-                        <div className="text-base text-black text-justify overflow-y-auto max-h-64">{projectsData?.description}</div>
-                    </div>
-                    
-                    <div className="fixed bottom-28 flex w-full px-20  bg-white-background">
-                        <button onClick={handleInscription} className="bg-orange-primary text-white w-44 h-10 rounded-lg items-center hover:bg-blue-primary">Quero me inscrever!</button>
-                    </div>
+  return (
+    <div className={"bg-white-background h-screen w-screen"}>
+      <div>
+        <NavBar />
+      </div>
+      {userInfo?.length !== 0 ? (
+        userInfo?.role === "volunteer" ? (
+          <div className="flex flex-col items-center h-full justify-center mt-48 pb-24">
+             <div className="self-start px-6 pb-2"><GoBackButton/></div>
+            <Image src={userInfo?.volunteer_info?.image?? "/images/perfil.png"} width="180" height="180" className="rounded-full" alt='profile'/>
 
-                    {showConfirmation && (
-                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                          <div className="bg-white-background p-6 rounded-lg mx-14">
-                            <p className="mb-4 text-center">Tem certeza que deseja se inscrever?</p>
-                            <div className="flex justify-center gap-1">
-                              <button onClick={confirmInscription} className="bg-orange-primary text-white px-8 rounded-md mr-2">Sim</button>
-                              <button onClick={cancelInscription} className="bg-gray-200 px-4 py-2 rounded-md ml-2">Cancelar</button>
-                            </div>
-                          </div>
-                        </div>
-                    )}
+            <p className=" mt-6 text-2xl font-semibold text-black">
+              {userInfo?.volunteer_info?.name}
+            </p>
+            <p>
+              {userInfo?.volunteer_info?.email}
+            </p>
+            <p>
+              {userInfo?.volunteer_info?.job}
+            </p>
 
-</div>
-<Footer />
-</div>
-);
+            <div className="flex flex-col justify-center pt-10 w-full gap-4">
+              <div className='mx-6 flex flex-col gap-14'>
+                <button onClick={handleLogout} className="bg-orange-primary text-white w-44 h-10 rounded-lg items-center justify-center self-center">Terminar sessão</button>
+                <VolunteerProjects projects={userInfo.projects} />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-6 pt-80 pb-32">
+          <div className="flex flex-col gap-2">
+              <div className="flex justify-center items-center w-full pb-4">
+                  {userInfo?.institution_info?.name === "Associação Salvador"? (
+                      <img src="/images/assalv_logo.svg" width="320" height="320" className="rounded-full" alt='profile'/>
+                  ) : (
+                      <img src="/images/perfil.png" width="180" height="180" className="rounded-full" alt='profile'/>
+                  )}
+              </div>
+              
+              <h1 className="text-2xl font-semibold text-black text-center">{userInfo?.institution_info?.name}</h1>
+              <p className="text-center">{userInfo?.institution_info?.username}</p>
+              <p className="text-orange-primary text-center">{userInfo?.institution_info?.local}</p>
+              
+              <div className="flex pt-1 justify-center pb-4 gap-2">
+                  <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white text-center">{userInfo?.applicants} inscrições em projetos</p>
+                  <p className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white  text-center">Classificação: 4.5/5</p>
+              </div>
 
-        </>
-    );
+              <div className="flex justify-center pb-6">
+                  <button onClick={handleLogout} className="bg-orange-primary text-white w-44 h-10 rounded-lg items-center justify-center self-center">Terminar sessão</button>
+              </div>
+          </div>
+
+          <div className="flex flex-col gap-3">
+              <h2 className="text-xl font-medium text-black">Descrição da Organização</h2>
+              <p className="text-justify text-base text-black">{userInfo?.institution_info?.description}</p>
+          </div>
+
+          <div>
+              <ProjectsList projects={userInfo?.projects}/>
+          </div>
+          
+          <div className="flex flex-col gap-3">
+              <h2 className="text-xl">Contactos</h2>
+              <div className="flex flex-col gap-0.5">
+                  <p>{userInfo?.institution_info?.email}</p>
+                  <p>{userInfo?.institution_info?.phone}</p>
+                  <p>{userInfo?.institution_info?.website_link}</p>
+              </div>
+          </div>
+      </div>
+          
+        )
+      ) : (
+        <div className='flex flex-col gap-32'>
+          <div className='self-start mx-8 pt-64'><GoBackButton /></div>
+          <div className="flex flex-col justify-center items-center gap-10 ">
+            <div className="text-2xl text-gray-text">Você não fez login 😔</div>
+            <Link href="../login_pages/login" ><button className="bg-orange-primary text-white py-2 px-4 rounded-lg">Página de login</button></Link>
+          </div>
+        </div>
+      )}
+      <div>
+        <Footer />
+      </div>
+
+      {showConfirmation && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white-background p-6 rounded-lg mx-14">
+            <p className="mb-4 text-center">Tem certeza que deseja terminar a sessão?</p>
+            <div className="flex justify-center gap-1">
+              <button onClick={confirmLogout} className="bg-orange-primary text-white px-8 rounded-md mr-2">Sim</button>
+              <button onClick={cancelLogout} className="bg-gray-200 px-4 py-2 rounded-md ml-2">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }

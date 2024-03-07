@@ -146,7 +146,7 @@ export default function Profile() {
         <div className='flex flex-col gap-32'>
           <div className='self-start mx-8 pt-64'><GoBackButton /></div>
           <div className="flex flex-col justify-center items-center gap-10 ">
-            <div className="text-2xl text-gray-text">Você não fez login 😔</div>
+            <div className="text-xl text-gray-text">Ainda não tens a sessão iniciada. 😔</div>
             <Link href="../login_pages/login" ><button className="bg-orange-primary text-white py-2 px-4 rounded-lg">Página de login</button></Link>
           </div>
         </div>
