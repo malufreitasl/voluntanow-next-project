@@ -1,5 +1,5 @@
-const { findInstitutionInfo } = require("../data/institution");
-const { findVolunteerInfo } = require("../data/volunteer");
+const { findInstitutionInfo, findInstitutionId } = require("../data/institution");
+const { findVolunteerInfo, findVolunteerId } = require("../data/volunteer");
 
 async function loadUserInfo(decryptedToken) {
     let [username, role] = decryptedToken.split(":")
@@ -18,4 +18,15 @@ async function loadUserInfo(decryptedToken) {
     return userInfo;
 }
 
-module.exports = { loadUserInfo };
+async function loadUserId(decryptedToken) {
+    let [username, role] = decryptedToken.split(":")
+    let userId
+    if (role === "volunteer") {
+        userId = await findVolunteerId(username);
+    } else {
+        userId = await findInstitutionId(username);
+    }
+    return userId;
+}
+
+module.exports = { loadUserInfo, loadUserId };

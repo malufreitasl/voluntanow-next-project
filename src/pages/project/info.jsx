@@ -40,6 +40,20 @@ export default function InfoProject() {
         }
     }, [i])
 
+    const fetchApplication = async () => {
+        try {
+            const response = await fetch(`../api/project/info?i=${i}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch project data');
+            }
+            const project = await response.json();
+            setProjectsData(project);
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Failed to fetch project data:', error);
+        }
+    }
+
     if (isLoading) {
         return (
           <div>
