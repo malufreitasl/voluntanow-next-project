@@ -29,8 +29,8 @@ async function loadAllInstitutionInfo() {
     return allProjects;
 }
 
-async function loadApplication(institution_id, project_id, volunteer_id){
-    const application = await findApplication(institution_id, project_id, volunteer_id);
+async function loadApplication(project_id, volunteer_id){
+    const application = await findApplication(project_id, volunteer_id);
     return application
 }
 

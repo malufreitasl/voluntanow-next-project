@@ -58,13 +58,8 @@ export default function InfoProject() {
             }
         };
 
-        const verifyAndLoadApplication = async (institution_id, project_id, volunteer_id) => {
+        const verifyAndLoadApplication = async (project_id, volunteer_id) => {
             try {
-                console.log("qqqqqqqqqqqqqqqqqqqqq")
-                console.log(projectsData.institution_id)
-                console.log( projectsData._id)
-                console.log( userData._id)
-
                 const response = await fetch(`../api/application/load-application`,
                     {
                         method: "POST",
@@ -74,7 +69,6 @@ export default function InfoProject() {
                             "Authorization": localStorage.getItem("token")
                         },
                         body: JSON.stringify({
-                            'institution_id': institution_id,
                             'project_id': project_id,
                             'volunteer_id': volunteer_id
                         })
@@ -82,11 +76,9 @@ export default function InfoProject() {
                 if (!response.ok) {
                     throw new Error('Failed to load application');
                 }
-                console.log(response)
                 let application = await response.json();
 
-                if(application != undefined)
-                {
+                if (application != undefined) {
                     setJaEstaInscrito(true)
                     setButtonQueroMeInscreverDisabled(true)
                 }
@@ -119,14 +111,10 @@ export default function InfoProject() {
                     //TODO verificar este /api/user porque nao tras os projetos todos em que o user esta inscrito
                     let encontrouOProjetoNoUser = userInformation[0].projects.find(x => x._id == i)
 
-                    if (!buttonQueroMeInscreverDisabled) {
-                        setButtonQueroMeInscreverDisabled(userInformation[0]?.role != 'volunteer')
-                    }
+                    setButtonQueroMeInscreverDisabled(encontrouOProjetoNoUser != undefined || userInformation[0]?.role != 'volunteer')
+                    setJaEstaInscrito(encontrouOProjetoNoUser != undefined)
 
-                    if (!jaEstaInscrito) {
-                        setJaEstaInscrito(encontrouOProjetoNoUser != undefined)
-                    }
-
+                    verifyAndLoadApplication(i, userInformation[0]._id);
                 }
 
             } catch (error) {
@@ -138,7 +126,7 @@ export default function InfoProject() {
         if (i) {
             fetchfoProjectInfo();
             getUserInfo();
-            verifyAndLoadApplication(projectsData.institution_id, projectsData._id, userData._id);
+            verifyAndLoadApplication(projectsData._id, userData._id);
         }
     }, [i])
 
@@ -184,7 +172,7 @@ export default function InfoProject() {
                         <div className="text-base text-black text-justify overflow-y-auto max-h-64">{projectsData?.description}</div>
 
                     </div>
-                    
+
                     {
                         jaEstaInscrito ?
                             <div>AAAAAAAAAAA</div>

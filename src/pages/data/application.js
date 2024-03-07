@@ -12,10 +12,9 @@ async function insertApplication(institution_id, project_id, volunteer_id) {
   return result.acknowledged;
 }
 
-async function findApplication(institution_id, project_id, volunteer_id) {
+async function findApplication(project_id, volunteer_id) {
   const collection = await getMongoCollection(collectionName)
   const result = await collection.findOne({
-    institution_id:institution_id,
     project_id:project_id,
     volunteer_id:volunteer_id
   })
