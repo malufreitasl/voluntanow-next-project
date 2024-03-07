@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { ProjectsList } from "../components/ProjectsList";
 import { Raleway } from "next/font/google";
 import Loading from "../components/Loading";
+import GoBackButton from "../components/GoBackButton";
 
 
 
@@ -52,7 +53,8 @@ export default function InfoInstitution() {
         <>
             <div className={`${raleway.className}`}>
                 <NavBar />
-                <div className="flex flex-col gap-6 px-6 pt-64 pb-32">
+                <div className="pt-64 px-6 pb-2"><GoBackButton/></div>
+                <div className="flex flex-col gap-6 px-6 pb-32">
                     <div className="flex flex-col gap-2">
                         <h1 className="text-2xl font-semibold text-black">{institutionData?.institution?.name}</h1>
                         <p className="text-orange-primary text-lg">{institutionData?.institution?.local}</p>

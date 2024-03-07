@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { Raleway } from "next/font/google";
 import StarRatings from "react-star-ratings";
+import GoBackButton from "../components/GoBackButton";
 
 
 const raleway = Raleway({ subsets: ["latin"] });
@@ -36,8 +37,9 @@ export default function InstitutionsPage() {
             <div >
                 <NavBar />
             </div>
-            <div className="flex gap-36 pt-64 pl-6 items-center">
-                <h1 className="text-2xl font-semibold text-black">Organizações</h1>
+            <div className="flex gap-2 pt-64 pl-6 items-center">
+                <GoBackButton/>
+                <h1 className="text-2xl font-semibold text-black text-center">Organizações</h1>
             </div>
             <div className="flex flex-col pt-4 gap-2.5 pl-6 pr-6 pb-32 100-vh ">
                 {allInstitutions.map((institutionData, index) => (

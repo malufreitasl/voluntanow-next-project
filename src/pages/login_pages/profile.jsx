@@ -8,6 +8,7 @@ import { removeToken } from "../utils/globalFunctions";
 import Loading from '../components/Loading';
 import { VolunteerProjects } from "../components/VolunteerProjects";
 import { ProjectsList } from '../components/ProjectsList';
+import GoBackButton from '../components/GoBackButton';
 
 export default function Profile() {
 
@@ -75,7 +76,8 @@ export default function Profile() {
       </div>
       {userInfo?.length !== 0 ? (
         userInfo?.role === "volunteer" ? (
-          <div className="flex flex-col items-center h-full justify-center mt-56 pb-24">
+          <div className="flex flex-col items-center h-full justify-center mt-48 pb-24">
+             <div className="self-start px-6 pb-2"><GoBackButton/></div>
             <Image src={userInfo?.volunteer_info?.image?? "/images/perfil.png"} width="180" height="180" className="rounded-full" alt='profile'/>
 
             <p className=" mt-6 text-2xl font-semibold text-black">
@@ -96,7 +98,7 @@ export default function Profile() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col gap-6 px-6 pt-80 pb-32">
+          <div className="flex flex-col gap-6 pt-80 pb-32">
           <div className="flex flex-col gap-2">
               <div className="flex justify-center items-center w-full pb-4">
                   {userInfo?.institution_info?.name === "Associação Salvador"? (
@@ -141,9 +143,12 @@ export default function Profile() {
           
         )
       ) : (
-        <div className="h-screen flex flex-col justify-center items-center gap-10">
-          <div className="text-2xl text-gray-text">Você não fez login 😔</div>
-          <Link href="../login_pages/login" ><button className="bg-orange-primary text-white p-2 rounded-lg">Página de login</button></Link>
+        <div className='flex flex-col gap-32'>
+          <div className='self-start mx-8 pt-64'><GoBackButton /></div>
+          <div className="flex flex-col justify-center items-center gap-10 ">
+            <div className="text-2xl text-gray-text">Você não fez login 😔</div>
+            <Link href="../login_pages/login" ><button className="bg-orange-primary text-white py-2 px-4 rounded-lg">Página de login</button></Link>
+          </div>
         </div>
       )}
       <div>
