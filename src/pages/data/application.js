@@ -550,12 +550,17 @@ async function findProjectById(projectID) {
 
 async function findUserApplication(userID, projectID) {
   const collection = await getMongoCollection(collectionName);
+
+  if (!ObjectId.isValid(userID) || !ObjectId.isValid(projectID)) {
+    console.log("ON NO")
+    return
+  }
   const userApplication = await collection.aggregate([
     {
       $match:
         {
-          project_id: new ObjectId(userID),
-          volunteer_id: new ObjectId(projectID),
+          project_id: new ObjectId(projectID),
+          volunteer_id: new ObjectId(userID),
         },
     },
     {

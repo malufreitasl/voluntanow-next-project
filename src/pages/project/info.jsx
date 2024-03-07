@@ -15,8 +15,8 @@ const raleway = Raleway({ subsets: ["latin"] });
 export default function InfoProject() {
     const [projectsData, setProjectsData] = useState({});
     const [showConfirmation, setShowConfirmation] = useState(false);
-    const [showPossibleLogIn, setshowPossibleLogIn] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [isUserSubscribed, setIsUserSubscribed] = useState(false);
     const router = useRouter();
     const { i } = router.query;
 
@@ -35,24 +35,54 @@ export default function InfoProject() {
             }
         };
 
+        const getUserId = async () => {
+            try {
+                const response = await fetch("/api/user/id", {
+                    method: "GET",
+                    headers: {
+                    'Accept': 'application/json',
+                    "Content-Type": "application/json",
+                    "Authorization": localStorage.getItem("token")
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                
+                const userId = await response.json();
+                fetchUserApplication(userId)
+                } catch (error) {
+                console.error('Failed to fetch data:', error);
+            }
+        }
+
+        const fetchUserApplication = async (uid) => {
+            try {
+                const response = await fetch("../api/application/user-application", {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({userID: uid, projectID: i}),
+                })
+                const userApplicationInfo = await response.json();
+                if (userApplicationInfo.length > 0){
+                    setIsUserSubscribed(true)
+                }
+            } catch (error) {
+                setIsUserSubscribed(false)
+                console.error('Failed to fetch user application:', error);
+            }
+        }
+
         if (i) {
             fetchfoProjectInfo();
+            if (isUserLoggedIn()) {
+                getUserId()
+            }
         }
     }, [i])
-
-    const fetchApplication = async () => {
-        try {
-            const response = await fetch(`../api/project/info?i=${i}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch project data');
-            }
-            const project = await response.json();
-            setProjectsData(project);
-            setIsLoading(false);
-        } catch (error) {
-            console.error('Failed to fetch project data:', error);
-        }
-    }
 
     if (isLoading) {
         return (
@@ -67,12 +97,9 @@ export default function InfoProject() {
     const handleSubscription = () => {
         setShowConfirmation(true);
     };
-    const possibleLogIn = () => {
-        setshowPossibleLogIn(true);
-    };
     
     const confirmSubscription = () => {
-        router.push('/project/jainscrito'); 
+        router.push(`/project/application?i=${i}`); 
     };
     const confirmLogIn = () => {
         router.push('/login_pages/login'); 
@@ -110,7 +137,7 @@ export default function InfoProject() {
                         <button onClick={handleSubscription} className=" flex justify-center bg-orange-primary text-white w-44 h-10 rounded-lg items-center hover:bg-blue-primary">Quero me inscrever!</button>
                     </div>
                     
-                    {showConfirmation && isUserLoggedIn() && (
+                    {showConfirmation && isUserLoggedIn() && !isUserSubscribed && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                             <div className="bg-white-background p-6 rounded-lg mx-14">
                                 <p className="mb-4 text-center">Tem certeza que deseja se inscrever?</p>
@@ -122,7 +149,19 @@ export default function InfoProject() {
                         </div>
                         )
                     }
-                    {showConfirmation && (
+                    {showConfirmation && isUserSubscribed && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                            <div className="bg-white-background p-6 rounded-lg mx-14">
+                                <p className="mb-4 text-center">Ja está inscrito nesse projeto. Deseja ver a tua inscrição?</p>
+                                <div className="flex justify-center gap-1">
+                                    <button onClick={confirmSubscription} className="bg-orange-primary text-white px-8 rounded-md mr-2">Sim</button>
+                                    <button onClick={cancelSubscription} className="bg-gray-200 px-4 py-2 rounded-md ml-2">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                        )
+                    }
+                    {showConfirmation && !isUserLoggedIn() && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                             <div className="bg-white-background p-6 rounded-lg mx-14">
                                 <p className="mb-4 text-center">Não tens sessão iniciada. Queres entrar?</p>

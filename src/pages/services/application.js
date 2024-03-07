@@ -28,8 +28,8 @@ async function loadAllInstitutionInfo() {
     const allProjects = await findAllInstitutionsInfo();
     return allProjects;
 }
-async function loadUserApplication(userID, project_id) {
-    const allProjects = await findUserApplication(userID, project_id);
+async function loadUserApplication(userID, projectID) {
+    const allProjects = await findUserApplication(userID, projectID);
     return allProjects;
 }
 

@@ -299,7 +299,7 @@ async function insertVolunteer(volunteerInfo){
 
 async function findVolunteerId(username){
     const collection = await getMongoCollection(collectionName)
-    const result = await collection.findOne({username: username}, _id)
+    const result = await collection.findOne({username: username})
     return result._id
 }
 

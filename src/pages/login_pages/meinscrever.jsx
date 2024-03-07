@@ -24,6 +24,14 @@ export default function MeInscrever() {
             }
         };
 
+        const fetchUserApplication = async () => {
+            try {
+                const response = await fetch
+            } catch (error) {
+                console.error('Failed to fetch user application:', error);
+            }
+        }
+
         if (i) {
             fetchfoProjectInfo();
         }
