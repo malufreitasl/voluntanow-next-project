@@ -55,7 +55,7 @@ export default function LogIn() {
         <>
             <div className="mx-6">
                 <div className="mt-16 flex flex-col items-center justify-center gap-2">
-                    <div className="mx-6 self-start"><GoBackButton/></div>
+                    <div className="mx-4 self-start"><GoBackButton/></div>
                     <Image src="/images/logo.png" width="280" height="280" />
                 </div>
                 
