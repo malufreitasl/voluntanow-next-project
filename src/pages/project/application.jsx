@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import QrCode from "../components/QrCode";
 import GoBackButton from "../components/GoBackButton";
 import { isUserLoggedIn } from "../utils/globalFunctions";
+import Loading from "../components/Loading";
 
 const raleway = Raleway({ subsets: ["latin"] });
 
@@ -79,8 +80,16 @@ export default function InfoProject() {
         }
     }, [i])
 
-    
-    
+    if (isLoading) {
+        return (
+          <div>
+            <NavBar />
+            <Loading/>
+            <Footer />
+          </div>
+        )
+      }
+
 
     return (
         <>
@@ -93,7 +102,7 @@ export default function InfoProject() {
                         <div className="text-xl text-orange-primary">{projectData?.address}</div>
                         <div className="flex gap-4 pt-1">
                             <div className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{projectData?.date} - {projectData?.hour}</div>
-                            <div class="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{projectData?.applicants} pessoas já inscritas</div>
+                            <div className="text-xs py-1 px-2.5 rounded-full bg-gray-text text-white">{projectData?.applicants} pessoas já inscritas</div>
                         </div>
                         <div className=" font-semibold text-black">Inscrição N.: {userApplication?._id}</div>
 

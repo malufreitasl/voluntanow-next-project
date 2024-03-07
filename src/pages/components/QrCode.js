@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { QRCodeCanvas } from "qrcode.react";
-import getRandom from "../project/application";
 
 const QrCode = () => {
   const [url, setUrl] = useState("");

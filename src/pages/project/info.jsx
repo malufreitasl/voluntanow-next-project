@@ -17,6 +17,7 @@ export default function InfoProject() {
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [isUserSubscribed, setIsUserSubscribed] = useState(false);
+    const [userID, setUserID] = useState("");
     const router = useRouter();
     const { i } = router.query;
 
@@ -51,6 +52,7 @@ export default function InfoProject() {
                 
                 const userId = await response.json();
                 fetchUserApplication(userId)
+                setUserID(userId)
                 } catch (error) {
                 console.error('Failed to fetch data:', error);
             }
@@ -108,6 +110,26 @@ export default function InfoProject() {
     const cancelSubscription = () => {
         setShowConfirmation(false);
     };
+
+    const createApplication = async () => {
+        try {
+            const response = await fetch("../api/application/add", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({institution_id: projectsData.institution_id, volunteer_id: userID, project_id: i}),
+            })
+            const result = await response.json();
+            if (result){
+                router.push(`/project/application?i=${i}`); 
+            }
+        } catch (error) {
+            setIsUserSubscribed(false)
+            console.error('Failed to fetch user application:', error);
+        }
+    }
     
 
     return (
@@ -142,7 +164,7 @@ export default function InfoProject() {
                             <div className="bg-white-background p-6 rounded-lg mx-14">
                                 <p className="mb-4 text-center">Tem certeza que deseja se inscrever?</p>
                                 <div className="flex justify-center gap-1">
-                                    <button onClick={confirmSubscription} className="bg-orange-primary text-white px-8 rounded-md mr-2">Sim</button>
+                                    <button onClick={createApplication} className="bg-orange-primary text-white px-8 rounded-md mr-2">Sim</button>
                                     <button onClick={cancelSubscription} className="bg-gray-200 px-4 py-2 rounded-md ml-2">Cancelar</button>
                                 </div>
                             </div>

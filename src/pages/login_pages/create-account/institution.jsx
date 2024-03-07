@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Footer } from "../../components/Footer";
-import PasswordMatch from "../confirmacaopass";
+import PasswordMatch from "../PasswordMatch";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import GoBackButton from "@/pages/components/GoBackButton";
@@ -141,7 +141,6 @@ export default function CreateVolunteerAccount() {
                     )}
                 </div>
             </div>
-            <Footer/>
         </>
     )
 }

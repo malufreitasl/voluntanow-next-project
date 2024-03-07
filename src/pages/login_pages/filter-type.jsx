@@ -19,7 +19,6 @@ export default function FiltrarTipo() {
                 </div>
                 
             </div>
-            <Footer/>
         </>
 
     )
