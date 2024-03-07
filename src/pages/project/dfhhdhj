@@ -5,19 +5,19 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Loading from "../components/Loading";
-
-
+import { isUserLoggedIn } from "../utils/globalFunctions";
 
 const raleway = Raleway({ subsets: ["latin"] });
 
 export default function InfoProject() {
     const [projectsData, setProjectsData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [showConfirmation, setShowConfirmation] = useState(false);
     const router = useRouter();
     const { i } = router.query;
 
     useEffect(() => {
-        const fetchfoProjectInfo = async () => {
+        const fetchProjectInfo = async () => {
             try {
                 const response = await fetch(`../api/project/info?i=${i}`);
                 if (!response.ok) {
@@ -32,9 +32,27 @@ export default function InfoProject() {
         };
 
         if (i) {
-            fetchfoProjectInfo();
+            fetchProjectInfo();
         }
-    }, [i])
+    }, [i]);
+
+    const handleInscription = () => {
+        if (isUserLoggedIn()) { // Verifica se o usuário está logado
+            setShowConfirmation(true);
+        } else {
+            router.push('/login_pages/meinscrever?i=${i}');
+        }
+    };
+
+    const confirmInscription = () => {
+        // Lógica para confirmar a inscrição
+        // Aqui você pode adicionar a lógica para inscrever o usuário na ação de voluntariado
+        setShowConfirmation(false);
+    };
+
+    const cancelInscription = () => {
+        setShowConfirmation(false);
+    };
 
     if (isLoading) {
         return (
@@ -44,14 +62,12 @@ export default function InfoProject() {
             <Footer />
           </div>
         )
-      }
+    }
     
-
     return (
         <>
             <div className={`${raleway.className}`}>
                 <NavBar />
-
                 <div className="flex fixed flex-col gap-6 px-6 pt-64 pb-28">
                     <div className="flex flex-col gap-2">
                         <div className="text-2xl font-semibold text-black">{projectsData?.name}</div>
@@ -64,22 +80,33 @@ export default function InfoProject() {
                             }
                         </div>
                     </div>
+
                     <div className="flex flex-col gap-3">
                         <h1 className="text-black text-xl font-medium max-h-30">Descrição da Atividade</h1>
                         <div className="text-base text-black text-justify overflow-y-auto max-h-64">{projectsData?.description}</div>
-                        
                     </div>
                     
                     <div className="fixed bottom-28 flex w-full px-20  bg-white-background">
-                        <Link href={`../login_pages/meinscrever?i=${i}`} className=" flex justify-center bg-orange-primary text-white w-44 h-10 rounded-lg items-center hover:bg-blue-primary">Quero me inscrever!</Link>
-                        <Link href={`../project/jainscrito`} className=" flex justify-center bg-orange-primary text-white w-44 h-10 rounded-lg items-center hover:bg-blue-primary">Já inscrito</Link>
+                        <button onClick={handleInscription} className="bg-orange-primary text-white w-44 h-10 rounded-lg items-center hover:bg-blue-primary">Quero me inscrever!</button>
                     </div>
-                    
 
-                </div>
+                    {showConfirmation && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                          <div className="bg-white-background p-6 rounded-lg mx-14">
+                            <p className="mb-4 text-center">Tem certeza que deseja se inscrever?</p>
+                            <div className="flex justify-center gap-1">
+                              <button onClick={confirmInscription} className="bg-orange-primary text-white px-8 rounded-md mr-2">Sim</button>
+                              <button onClick={cancelInscription} className="bg-gray-200 px-4 py-2 rounded-md ml-2">Cancelar</button>
+                            </div>
+                          </div>
+                        </div>
+                    )}
 
-                <Footer />
-            </div>
+</div>
+<Footer />
+</div>
+);
+
         </>
-    )
+    );
 }
