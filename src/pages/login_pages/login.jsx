@@ -4,12 +4,40 @@ import { Footer } from "../components/Footer";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { isUserLoggedIn } from "../utils/globalFunctions";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+// setInputNotify(true)
+// notify()
+// const notify = () => toast("A conta foi criada!");
+
+// {inputNotify&& (
+//     <ToastContainer
+//     position="top-right"
+//     autoClose={5000}
+//     hideProgressBar={false}
+//     newestOnTop={false}
+//     closeOnClick
+//     rtl={false}
+//     pauseOnFocusLoss
+//     draggable
+//     pauseOnHover
+//     theme="light"
+//     />
+   
+    
+// )}
 
 export default function LogIn() {
     const router = useRouter();
     const isLoggedIn = isUserLoggedIn();
     const [errorMessage, setErrorMessage] = useState('');
+    // const [inputNotify, setInputNotify] = useState(false)
 
+    
+    
+    
     useEffect(() => {
         if (isLoggedIn) {
             router.push('/login_pages/profile');
@@ -77,6 +105,11 @@ export default function LogIn() {
                 
             </div>
             <Footer/>
+
+
+
+
+            
         </>
     )
 }
