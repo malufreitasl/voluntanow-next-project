@@ -1,7 +1,7 @@
 const { findProjectById } = require('../data/application');
 const { getAllProjectsInfo } = require('./application');
-const { loadAllProjectsInfo, loadProjectById, findAllProjectsForSearch } = require('../data/project')
-const {loadProjectMeanRating, loadAllProjectRating} = require('../services/project_rating')
+const { loadAllProjectsInfo, loadProjectById, findAllProjectsForSearch, insertProject } = require('../data/project')
+const { loadAllProjectRating } = require('../services/project_rating')
 
 async function loadProjects() {
     const allProjects = await loadAllProjectsInfo();
@@ -40,4 +40,8 @@ async function getAllProjectsForSearch()
     return allProjects;
 }
 
-module.exports = { loadProjects, loadAllProjectDataById, getAllProjectsForSearch };
+async function createProject(projectInfo) {
+    return await insertProject(projectInfo);
+}
+
+module.exports = { loadProjects, loadAllProjectDataById, getAllProjectsForSearch, createProject };

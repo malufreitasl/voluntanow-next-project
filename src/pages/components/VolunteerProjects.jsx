@@ -43,7 +43,7 @@ export function VolunteerProjects({ projects }){
     
 
     return (
-        <div className='flex flex-col gap-7 mx-6'>
+        <div className='flex flex-col gap-7 mx-4'>
             <div className="flex flex-col gap-3">
                 <h2 className="font-medium text-xl text-black ">Ações que está inscrito</h2>
                 {recentProjects?.map((project, index) => (
@@ -63,7 +63,7 @@ export function VolunteerProjects({ projects }){
                     }}
                     key={index}
                     >
-                        <Link href={`/project/info?i=${project._id}`}>                           
+                        <Link href={`/project/application?i=${project._id}`}>                           
                             <div className={`pb-2 ${index === recentProjects.length - 1? "border-0" : "border-b border-gray-text" }`}>
                                 <div className="text-blue-primary text-base font-medium">{project?.name}</div>
                                 <div className="text-orange-primary text-sm">{project?.address}</div>
@@ -80,7 +80,7 @@ export function VolunteerProjects({ projects }){
                     <h2 className="font-medium text-xl text-black ">Ações que participou</h2>
                     {finishedProjects?.map((project, index) => (
                         <div key={index}>
-                            <Link href={`/project/info?i=${project._id}`}> 
+                            <Link href={`/project/application?i=${project._id}`}> 
                                 <div className={`pb-2 ${index === finishedProjects.length - 1 ? "border-0" : "border-b border-gray-text"}`}>
                                     <div className="text-blue-primary text-base font-medium">{project?.name}</div>
                                     <div className="text-orange-primary text-sm">{project?.address}</div>

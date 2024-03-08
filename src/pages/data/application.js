@@ -1,13 +1,14 @@
 const { ObjectId } = require('mongodb');
-const { getMongoCollection } = require('./mongodb')
+const { getMongoCollection } = require('./mongodb');
+const { object } = require('yup');
 const collectionName = "application"
 
 async function insertApplication(institution_id, project_id, volunteer_id) {
   const collection = await getMongoCollection(collectionName)
   const result = await collection.insertOne({
-    institution_id,
-    project_id,
-    volunteer_id
+    institution_id: new ObjectId(institution_id),
+    project_id: new ObjectId(project_id),
+    volunteer_id: new ObjectId(volunteer_id)
   })
   return result.acknowledged;
 }
@@ -548,4 +549,69 @@ async function findProjectById(projectID) {
   return institution_info.toArray();
 }
 
-module.exports = { findAllApplications, findTopApplications, findTopByInstitutions, insertApplication, findTopByProjects, findAllInstitutionsInfo, findInstitutionById, findProjectById, getAllProjectsInfoFromApplications };
+async function findUserApplication(userID, projectID) {
+  const collection = await getMongoCollection(collectionName);
+
+  if (!ObjectId.isValid(userID) || !ObjectId.isValid(projectID)) {
+    console.log("ON NO")
+    return
+  }
+  const userApplication = await collection.aggregate([
+    {
+      $match:
+        {
+          project_id: new ObjectId(projectID),
+          volunteer_id: new ObjectId(userID),
+        },
+    },
+    {
+      $lookup:
+        {
+          from: "institution",
+          localField: "institution_id",
+          foreignField: "_id",
+          as: "institution",
+        },
+    },
+    {
+      $lookup:
+        {
+          from: "project",
+          localField: "project_id",
+          foreignField: "_id",
+          as: "project",
+        },
+    },
+    {
+      $lookup:
+        {
+          from: "volunteer",
+          localField: "volunteer_id",
+          foreignField: "_id",
+          as: "volunteer",
+        },
+    },
+    {
+      $project:
+        {
+          project: 1,
+          volunteer: 1,
+          "institution._id": "$institution._id",
+          "institution.username":
+            "$institution.username",
+          "institution.name": "$institution.name",
+          "institution.description":
+            "$institution.description",
+          "institution.website_link":
+            "$institution.website_link",
+          "institution.email": "$institution.email",
+          "institution.phone": "$institution.phone",
+          "institution.local": "$institution.local",
+        },
+    },
+  ]
+  ).toArray();
+  return userApplication;
+}
+
+module.exports = { findAllApplications, findTopApplications, findTopByInstitutions, insertApplication, findTopByProjects, findAllInstitutionsInfo, findInstitutionById, findProjectById, getAllProjectsInfoFromApplications, findUserApplication };

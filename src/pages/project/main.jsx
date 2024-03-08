@@ -5,6 +5,7 @@ import { Raleway } from "next/font/google";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import StarRatings from "react-star-ratings";
+import GoBackButton from "../components/GoBackButton";
 
 
 const raleway = Raleway({ subsets: ["latin"] });
@@ -39,7 +40,8 @@ export default function ProjectPage() {
                 <div>
                     <NavBar />
                 </div>
-                <div className="flex gap-36 pt-64 pl-6 items-center">
+                <div className="flex gap-2 pt-64 pl-6 items-center">
+                    <GoBackButton/>
                     <h1 className="text-black text-2xl font-semibold">Ações anunciadas</h1>
                 </div>
 

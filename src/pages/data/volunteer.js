@@ -141,6 +141,7 @@ async function findVolunteerInfo(username) {
 
   return volunteerInfo;
 };
+
 async function findVolunteerInfoByEmail(email) {
   const collection = await getMongoCollection(collectionName);
   const volunteerInfo = await collection.aggregate([
@@ -296,5 +297,11 @@ async function insertVolunteer(volunteerInfo){
     return result
 }
 
+async function findVolunteerId(username){
+    const collection = await getMongoCollection(collectionName)
+    const result = await collection.findOne({username: username})
+    return result._id
+}
 
-module.exports = { findVolunteerInfo, findVolunteerInfoByEmail, insertVolunteer };
+
+module.exports = { findVolunteerInfo, findVolunteerInfoByEmail, insertVolunteer, findVolunteerId };
