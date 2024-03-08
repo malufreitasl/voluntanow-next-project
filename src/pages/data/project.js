@@ -47,5 +47,19 @@ async function findAllProjectsForSearch()
   return collection.find({}, { projection: { _id: 1, name: 1, institution_id: 1 } }).toArray();
 }
 
+async function insertProject(projectInfo) {
+  const collection = await getMongoCollection(collectionName)
+  const result = await collection.insertOne({
+    institution_id: new ObjectId(projectInfo.institution_id),
+    name: projectInfo.name,
+    description: projectInfo.description,
+    hour: projectInfo.hour,
+    date: projectInfo.date,
+    min_duration: projectInfo.min_duration,
+    address: projectInfo.address,
+  })
+  return result.acknowledged;
+}
 
-module.exports = { loadAllProjectsInfo, loadProjectById, findAllProjectsForSearch };
+
+module.exports = { loadAllProjectsInfo, loadProjectById, findAllProjectsForSearch, insertProject};
