@@ -76,22 +76,24 @@ function NavBar() {
   return (
     <div className="fixed top-0 left-0 w-full bg-white-background z-50 ">
       <div className="fixed w-full bg-white-background z-50">
-        <div className="px-6 ">
+        <div className="px-6">
 
           <div className=" flex items-center">
-            <div className="pt-14">
-              <Image src="/images/logo.png" width="80" height="80" />
+            <div className="pt-7">
+              <Link href="/">
+                <Image src="/images/logo.png" width="80" height="80" />
+              </Link>
             </div>
 
-            <div className="flex flex-grow justify-end pt-20 gap-7 items-center">
+            <div className="flex flex-grow justify-end pt-5 gap-7 items-center">
               <Link href="../notification/notifications"><Notification /></Link>
               <DropdownMenuIcon />
             </div>
           </div>
 
 
-          <div className="flex justify-center items-center pt-4">
-            <div className='relative flex w-full items-center mt-3 cursor-pointer '>
+          <div className="flex justify-center items-center pt-1">
+            <div className='relative flex w-full items-center mt-1 cursor-pointer '>
               {(
                 <>
                   <div className="relative flex items-center">

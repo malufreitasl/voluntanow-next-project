@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Footer } from "../../components/Footer";
-import PasswordMatch from "../PasswordMatch";
+import PasswordMatch from "../../components/PasswordMatch";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
@@ -45,12 +44,8 @@ export default function CreateVolunteerAccount() {
                 setSendNotify(true);
                 toast.success("Conta criada com sucesso!");
                 setTimeout(() => {
-                    // Faça algo aqui, como redirecionar o usuário para outra página
-                    // ou executar qualquer outra ação que você precise
                    router.push("/login_pages/login") ;
                   }, 3000);
-                
-               
             }
         } catch (error) {
             console.error('Failed to fetch data:', error);
@@ -97,14 +92,14 @@ export default function CreateVolunteerAccount() {
     return (
         <>
             <div className="bg-white-background">
-                <div className="pt-10 flex flex-col fixed w-full items-center bg-gray-terciary align-center justify-center">
+                <div className="pt-16 flex flex-col fixed w-full items-center bg-gray-terciary align-center justify-center">
                     <div className="self-start mx-6">
                         <GoBackButton />
                     </div>
                     <Image src="/images/logo.png" width="280" height="280" className="bg-white-background"/>
                 </div>
 
-                <div className="bg-gray-50 pt-80 px-8 pb-32">
+                <div className="bg-gray-50 pt-96 px-10 pb-16">
                 <form className="flex flex-col bg-gray-50 pt-10">
                         <h1 className="text-2xl pb-10 text-center">Criar Conta de Voluntário</h1>
                         <p className="text-sm pt-6">Username</p>

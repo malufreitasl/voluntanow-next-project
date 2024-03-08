@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Footer } from "../components/Footer";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { isUserLoggedIn } from "../utils/globalFunctions";
@@ -54,12 +53,12 @@ export default function LogIn() {
     return (
         <>
             <div className="mx-6">
-                <div className="mt-16 flex flex-col items-center justify-center gap-2">
+                <div className="mt-16 flex flex-col items-center justify-center gap-10">
                     <div className="mx-4 self-start"><GoBackButton/></div>
                     <Image src="/images/logo.png" width="280" height="280" />
                 </div>
                 
-                <div className="flex flex-col mx-6 pt-4 pb-36">
+                <div className="flex flex-col mx-6 pt-6 pb-36">
                     <p className="text-sm">Nome de usuário</p>
                     <input type="text" name="username" id="username" className="h-12 px-4 bg-gray-terciary shadow-inner rounded-lg" onChange={ handleInputChange }/>
                     <p className="text-sm mt-2">Palavra Passe</p>
@@ -69,7 +68,7 @@ export default function LogIn() {
                             <p className="text-gray-text pt-4 text-center">{errorMessage}</p>
                         </div>
                     )}
-                    <button onClick={ fetchLogin } className="mt-8 h-12 bg-orange-primary text-white shadow-inner rounded-lg">
+                    <button onClick={ fetchLogin } className="mt-12 h-12 bg-orange-primary text-white shadow-inner rounded-lg">
                         Login
                     </button>
                     <Link href="/login_pages/filter-type">

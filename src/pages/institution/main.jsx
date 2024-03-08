@@ -37,7 +37,7 @@ export default function InstitutionsPage() {
             <div >
                 <NavBar />
             </div>
-            <div className="flex gap-2 pt-64 pl-6 items-center">
+            <div className="flex gap-2 pt-48 mt-2 pl-6 items-center">
                 <GoBackButton/>
                 <h1 className="text-2xl font-semibold text-black text-center">Organizações</h1>
             </div>
