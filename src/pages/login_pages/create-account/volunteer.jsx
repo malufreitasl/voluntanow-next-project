@@ -4,6 +4,11 @@ import { Footer } from "../../components/Footer";
 import PasswordMatch from "../confirmacaopass";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { ToastContainer, toast } from "react-toastify";
+
+
+
+  
 
 export default function CreateVolunteerAccount() {
     const [credentials, setCredentials] = useState({ role: "volunteer" });
@@ -11,6 +16,19 @@ export default function CreateVolunteerAccount() {
     const [errorMessage, setErrorMessage] = useState('');
     const [passwordCheck, setPasswordCheck] = useState(false);
     const [inputDisabled, setInputDisabled] = useState(false);
+    const [sendNotify, setSendNotify] = useState(false)
+
+    const contextClass = {
+        success: "bg-blue-600",
+        error: "bg-red-600",
+        info: "bg-blue-600",
+        warning: "bg-orange-400",
+        default: "bg-indigo-600",
+        dark: " font-black",
+        
+        
+      };
+
     const router = useRouter();
 
     const createUserAccount = async (e) => {
@@ -27,8 +45,16 @@ export default function CreateVolunteerAccount() {
             if (response.ok) {
                 setErrorMessage('');
                 setAvailabilityCheck(true);
-                router.push("/login_pages/login")
-            } 
+                setSendNotify(true);
+                toast.success("Conta criada com sucesso!");
+                setTimeout(() => {
+                    // Faça algo aqui, como redirecionar o usuário para outra página
+                    // ou executar qualquer outra ação que você precise
+                   router.push("/login_pages/login") ;
+                  }, 3000);
+                
+               
+            }
         } catch (error) {
             console.error('Failed to fetch data:', error);
             setErrorMessage('Failed to fetch data');
@@ -82,25 +108,25 @@ export default function CreateVolunteerAccount() {
                     <form className="flex flex-col bg-gray-50">
                         <h1 className="text-2xl pt-2 text-center">Criar Conta de Voluntário</h1>
                         <p className="text-sm pt-6">Username</p>
-                        <input onChange={handleInputChange} type="text" name="username" id="username" className="h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required disabled={inputDisabled}/>
-                        { !credentials.username && (
+                        <input onChange={handleInputChange} type="text" name="username" id="username" className="h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required disabled={inputDisabled} />
+                        {!credentials.username && (
                             <div className="mx-1 mt-1 mb-b">
                                 <p className="text-sm text-end text-red-warning">{errorMessage}</p>
                             </div>
                         )}
-                        { errorMessage && credentials.username && errorMessage.includes("Username") && (
+                        {errorMessage && credentials.username && errorMessage.includes("Username") && (
                             <div className="mx-1 mt-1 mb-b">
                                 <p className="text-sm text-end text-red-warning">{errorMessage}</p>
                             </div>
                         )}
                         <p className="text-sm">Email</p>
-                        <input onChange={handleInputChange} type="text" name="email" id="email" className="h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required disabled={inputDisabled}/>
+                        <input onChange={handleInputChange} type="text" name="email" id="email" className="h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required disabled={inputDisabled} />
                         {errorMessage && credentials.email && errorMessage.includes("Email") && (
                             <div className="mx-1 mt-1 mb-b">
                                 <p className="text-sm text-end text-red-warning">{errorMessage}</p>
                             </div>
                         )}
-                        { !credentials.email && (
+                        {!credentials.email && (
                             <div className="mx-1 mt-1 mb-b">
                                 <p className="text-sm text-end text-red-warning">{errorMessage}</p>
                             </div>
@@ -111,22 +137,22 @@ export default function CreateVolunteerAccount() {
                     </form>
 
                     {availabilityCheck && (
-                        <PasswordMatch setPasswordCheck={setPasswordCheck} passwordCheck={passwordCheck} setCredentials={setCredentials}/>
+                        <PasswordMatch setPasswordCheck={setPasswordCheck} passwordCheck={passwordCheck} setCredentials={setCredentials} />
                     )}
 
                     {availabilityCheck && passwordCheck && (
                         <div>
                             <div className="flex flex-col">
                                 <p className="text-sm">Nome do Voluntário</p>
-                                <input onChange={handleInputChange} type="text" name="name" id="name" className="h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required/>
-                                <p className="text-sm mt-2">Idade</p>                                    
-                                <input onChange={handleInputChange} type="number" name="age" id="age" className="h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required/>
+                                <input onChange={handleInputChange} type="text" name="name" id="name" className="h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required />
+                                <p className="text-sm mt-2">Idade</p>
+                                <input onChange={handleInputChange} type="number" name="age" id="age" className="h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required />
                                 <p className="text-sm mt-2">Género</p>
-                                <input onChange={handleInputChange} type="text" name="gender" id="gender" className="h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required/>
+                                <input onChange={handleInputChange} type="text" name="gender" id="gender" className="h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required />
                                 <p className="text-sm">Contacto telefónico</p>
-                                <input onChange={handleInputChange} type="text" name="phone" id="phone" className=" h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required/>
+                                <input onChange={handleInputChange} type="text" name="phone" id="phone" className=" h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required />
                                 <p className="text-sm mt-2">Profissão</p>
-                                <input onChange={handleInputChange} type="text" name="job" id="job" className=" h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required/>
+                                <input onChange={handleInputChange} type="text" name="job" id="job" className=" h-12 pl-4 bg-gray-terciary shadow-inner rounded-lg" required />
                             </div>
                             <div className="flex justify-center mt-16">
                                 <Link href="/login_pages/login">
@@ -136,8 +162,18 @@ export default function CreateVolunteerAccount() {
                         </div>
                     )}
                 </div>
+                <ToastContainer
+                    toastClassName={(context) =>
+                        contextClass[context?.type || "default"] +
+                        " relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-white"
+                    }
+                    bodyClassName={() => "text-sm text-black font-med block p-3"}
+                    position="top-left"
+                    autoClose={3000}
+                />
             </div>
-            <Footer/>
+            <Footer />
+
         </>
     )
 }
