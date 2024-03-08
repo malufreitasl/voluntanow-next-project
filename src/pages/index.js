@@ -55,9 +55,9 @@ export default function Home() {
         <NavBar />
       </div>
       <div className="px-6">
-        <div className=" pt-64 flex justify-between text-center">
-          <h1 className="text-black text-xl font-medium">Organizações em destaque</h1>
-          <Link href="/institution/main"><h2 className="text-gray-text text-sm">Ver mais</h2></Link>
+        <div className="pt-48 flex justify-between text-center items-center">
+          <h1 className="pt-4 text-black text-xl font-medium">Organizações em destaque</h1>
+          <Link href="/institution/main"><h2 className="pt-4 text-gray-text text-sm">Ver mais</h2></Link>
         </div>
         <div className="flex pt-6 gap-6 overflow-auto whitespace-nowrap no-scrollbar  ">
           {topInstitutions.map((elemento, index) =>
@@ -88,11 +88,11 @@ export default function Home() {
             </motion.div>
           )}
         </div>
-        <div className="flex pt-6 justify-between text-center">
+        <div className="flex pt-6 justify-between text-center items-center">
           <h1 className="text-black text-xl font-medium">Ações anunciadas</h1>
           <Link href="/project/main"><h2 className="text-gray-text text-sm">Ver mais</h2></Link>
         </div>
-        <div className="flex flex-col pt-4 gap-2.5">
+        <div className="flex flex-col pt-4 pb-32 gap-2.5">
           {topProjects.map((projeto, index) =>
             <motion.div
               initial={{
@@ -125,7 +125,6 @@ export default function Home() {
           )}
         </div>
       </div>
-      <div className="h-40"></div>
       <div>
         <Footer />
       </div>

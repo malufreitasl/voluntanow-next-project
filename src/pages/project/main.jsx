@@ -7,11 +7,9 @@ import { useState, useEffect } from "react";
 import StarRatings from "react-star-ratings";
 import GoBackButton from "../components/GoBackButton";
 
-
 const raleway = Raleway({ subsets: ["latin"] });
 
 export default function ProjectPage() {
-
 
     const [allProjects, setAllProjects] = useState([]);
 
@@ -40,7 +38,7 @@ export default function ProjectPage() {
                 <div>
                     <NavBar />
                 </div>
-                <div className="flex gap-2 pt-64 pl-6 items-center">
+                <div className="flex gap-2 pt-48 mt-2 pl-6 items-center">
                     <GoBackButton/>
                     <h1 className="text-black text-2xl font-semibold">Ações anunciadas</h1>
                 </div>
@@ -96,8 +94,6 @@ export default function ProjectPage() {
                 </div>
 
             </div>
-
-            <div className="h-40"></div>
             <Footer />
 
         </>

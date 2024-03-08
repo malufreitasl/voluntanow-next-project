@@ -33,7 +33,7 @@ function Footer() {
     }, [router.pathname]);
 
     return (
-        <div className="fixed bottom-0 w-full flex justify-between px-12 items-center bg-blue-primary h-20 text-white">
+        <div className="fixed bottom-0 w-full flex justify-between px-12 py-5 items-center bg-blue-primary text-white">
             <Link href="/" onClick={() => setActiveButton("home")}><HomeIcon activeButton={activeButton}/></Link>
             <Link href="/institution/main" onClick={() => setActiveButton("institution")}><NoteIcon activeButton={activeButton}/></Link>
             <Link href="/project/main" onClick={() => setActiveButton("project")}><MdOutlineVolunteerActivism className="h-7 w-7" color={activeButton === "project"? "#FF5516": "white"}/></Link>

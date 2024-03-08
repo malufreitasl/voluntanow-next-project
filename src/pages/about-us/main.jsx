@@ -2,8 +2,6 @@ import { NavBar } from '../components/NavBar'
 import { Footer } from "../components/Footer"
 import Image from "next/image";
 
-
-
 export default function AboutUs(){
     return(
         <>
@@ -37,8 +35,6 @@ export default function AboutUs(){
                 <p className='mt-8'>Os nossos valores são a lealdade, a criatividade e sobretudo o altruísmo, acreditamos que dessa forma teremos um mundo com mais optimismo.</p>
             </div>
         </div>
-        
-        
         <Footer/>
         </>
     )

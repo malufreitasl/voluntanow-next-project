@@ -3,12 +3,9 @@ import { Footer } from "../components/Footer"
 import { Raleway } from "next/font/google";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import Loading from "../components/Loading";
 import { isUserLoggedIn } from "../utils/globalFunctions";
 import GoBackButton from "../components/GoBackButton";
-
-
 
 const raleway = Raleway({ subsets: ["latin"] });
 
@@ -136,7 +133,7 @@ export default function InfoProject() {
         <>
             <div className={`${raleway.className}`}>
                 <NavBar />
-                <div className="pt-64 px-6 pb-2"><GoBackButton/></div>
+                <div className="pt-48 mt-2 px-6 pb-2"><GoBackButton/></div>
                 <div className="flex flex-col gap-6 px-6 pb-32">
                     <div className="flex flex-col gap-2">
                         <div className="text-2xl font-semibold text-black">{projectsData?.name}</div>

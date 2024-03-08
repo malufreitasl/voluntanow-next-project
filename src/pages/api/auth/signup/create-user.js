@@ -1,6 +1,5 @@
 import { createUser } from "@/pages/services/signup";
 
-
 export default async function handler(req, res) {
     try {        
         const userInfo = req.body
